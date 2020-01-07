@@ -9,7 +9,7 @@
 #define LINKEDLIST	(0)
 #define ARRAYLIST	(1)
 
-#define newObject(nameType) __newObject__(sizeof(nameType))
+#define newObject(nameType) (nameType*)__newObject__(sizeof(nameType))
 
 #ifdef __cplusplus
 extern "C" {
