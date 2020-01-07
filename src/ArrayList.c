@@ -12,8 +12,9 @@ void* setAL(ArrayList* al, size_t index, void* newObject)
 	return (index >= 0 && index < al->count) ? ((al->ptr[index] = newObject)) : (NULL);
 }
 
-void clearAL(ArrayList* al)
+void clearAL(void* ptrAL)
 {  
+	ArrayList* al = ptrAL;
 	if (al->count != 0)
 	{
 		for (int i = 0; i != al->count; ++i)
