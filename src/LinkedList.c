@@ -2,8 +2,9 @@
 #include <stdio.h>
 #include "LinkedList.h"
 
-void clearLK(LinkedList* lk)
+void clearLK(void* ptrLK)
 {
+	LinkedList* lk = ptrLK;
 	Node* aux;
 	if (lk->count != 0)
 	{
