@@ -21,7 +21,7 @@ typedef struct LinkedList LinkedList;
 typedef struct Node Node;
 
 #define newLinkedList() (LinkedList*)__new__(LINKEDLIST, sizeof(LinkedList))
-
+#define freeObjectLK(objectLK) freeObject(LINKEDLIST, objectLK, clearLK)
 #define forLK(type, nameVar, ptr) \
 	ptr->aux = ptr->pBegin; \
 	for(type* nameVar; ptr->aux != NULL && (nameVar = (type*)ptr->aux->object) != NULL; ptr->aux = ptr->aux->sig)
