@@ -1,10 +1,10 @@
 #include <stdlib.h>
-//#include <stdio.h>
 #include "ArrayList.h"
 #include "LinkedList.h"
 #include "MemoryManagement.h"
 
 static LinkedList lk[2];
+static void* searchObject;
 
 void* __new__(size_t id, size_t size)
 {
@@ -28,6 +28,18 @@ void* __newObject__(size_t size)
 	return p;
 }
 
+int compare(void* object)
+{
+	return object == searchObject;
+}
+
+void freeObject(size_t id, void* objectList, void(*clear)(void*))
+{
+	searchObject = objectList;
+	clear(objectList);
+	removeLK(&lk[id], compare, ALL);
+}
+
 void freeALL()
 {
 	freeALLEx(LINKEDLIST, clearLK);
@@ -45,5 +57,4 @@ void freeALLEx(size_t id, void(*clear)(void*))
 		free(lk[id].aux);
 	}
 	lk[id].count = 0;
-	//printf("CountLists: %d\n", lk[id].count);
 }
