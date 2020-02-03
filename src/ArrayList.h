@@ -6,15 +6,15 @@
 struct ArrayList
 {
 	void** ptr;
-	size_t count;
 	size_t capacity;
 	size_t i;
+	size_t count;
 };
 
 typedef struct ArrayList ArrayList;
 
 #define newArrayList() (ArrayList*)__new__(ARRAYLIST, sizeof(ArrayList))
-
+#define freeObjectAL(objectAL) freeObject(ARRAYLIST, objectAL, clearAL)
 #define forAL(type, nameVar, _ptr) \
 	_ptr->i = 0; \
 	for(type* nameVar; _ptr->i != _ptr->count && (nameVar = (type*)_ptr->ptr[_ptr->i]) != NULL; ++_ptr->i)
