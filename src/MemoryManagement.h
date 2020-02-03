@@ -15,10 +15,11 @@
 extern "C" {
 #endif /* __cplusplus */
 
-void* __new__(size_t, size_t);
-void freeALLEx(size_t, void(*__)(void*));
+void freeObject(size_t id, void* objectList, void(*clear)(void*));
+void* __new__(size_t id, size_t size);
+void freeALLEx(size_t id, void(*clear)(void*));
 void freeALL(void);
-void* __newObject__(size_t);
+void* __newObject__(size_t size);
 
 #ifdef __cplusplus
 }
