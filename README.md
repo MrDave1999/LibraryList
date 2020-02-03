@@ -13,6 +13,7 @@ Las carpetas `lib` y `include` se encuentran en el directorio (se suele llamar `
 #include <LinkedList.h>
 #include <ArrayList.h>
 ```
+En este [enlace](https://github.com/MrDave1999/LibraryList/releases/tag/v1.5) está la opción para descargar los archivos. 
 
 ### Documentación
 
