@@ -1,6 +1,6 @@
 # LibraryList
 [![LibraryList](https://img.shields.io/badge/C-LibraryList-blue)](https://github.com/MrDave1999/LibraryList)
-[![LibraryList](https://img.shields.io/badge/LibraryList-v1.0-blue)](https://github.com/MrDave1999/LibraryList)
+[![LibraryList](https://img.shields.io/badge/LibraryList-v1.5-blue)](https://github.com/MrDave1999/LibraryList)
 
 LibraryList es una biblioteca de listas en la cual permitirá manejar fácilmente un `LinkedList` o `ArrayList`, debido a que, todo se lo implementó de forma genérica, esto quiere decir que podrás tener en una misma aplicación varios `LinkedList` sin la necesidad de gastar tanto código.
 
