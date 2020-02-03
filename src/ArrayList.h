@@ -35,4 +35,4 @@ void* findAL(ArrayList* al, int(*funcComparator)(void*));
 }
 #endif  /* __cplusplus */
 
-#endif /* _ARRAYLIST_H */
+#endif /* _ARRAYLIST_H */ 
