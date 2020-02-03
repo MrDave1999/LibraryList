@@ -112,6 +112,7 @@ void removeElement(LinkedList* lk, Node* penNode)
 	else
 		penNode->sig = lk->aux->sig;
 	lk->aux = lk->aux->sig;
+	free(aux2->object);
 	free(aux2);
 	--lk->count;
 }
