@@ -1,60 +1,65 @@
+/*
+	Copyright (c) 2020 MrDave1999 (David Román)
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+*/
+
 #include <stdlib.h>
-#include "ArrayList.h"
-#include "LinkedList.h"
-#include "MemoryManagement.h"
+#include "lst/ArrayList.h"
+#include "lst/LinkedList.h"
+#include "lst/Stack.h"
 
-static LinkedList lk[2];
-static void* searchObject;
+LinkedList registers[MAX_LISTS];
 
-void* __new__(size_t id, size_t size)
+void* new_object_list(const size_t typeList, const size_t size)
 {
 	void* ptr = calloc(1, size);
-	if (ptr == NULL || addLK(&lk[id], ptr))
-	{
-		freeALL();
-		return NULL;
-	}
-	return ptr;
+	return (ptr == NULL || addLK(&registers[typeList], ptr)) ? NULL : ptr;
 }
 
-void* __newObject__(size_t size)
+boolean equals(const void* object, const void* key)
 {
-	void* p = malloc(size);
-	if (p == NULL)
-	{
-		freeALL();
-		return NULL;
-	}
-	return p;
+	return object == key;
 }
 
-int compare(void* object)
+void delete_object_list(const size_t typeList, void* objectList, Clear clear)
 {
-	return object == searchObject;
-}
-
-void freeObject(size_t id, void* objectList, void(*clear)(void*))
-{
-	searchObject = objectList;
 	clear(objectList);
-	removeLK(&lk[id], compare, ALL);
+	removeLK(&registers[typeList], objectList, equals);
 }
 
 void freeALL()
 {
-	freeALLEx(LINKEDLIST, clearLK);
-	freeALLEx(ARRAYLIST, clearAL);
+	freeALLEx(LINKEDLIST, (void(*)(void*))clearLK);
+	freeALLEx(ARRAYLIST, (void(*)(void*))clearAL);
+	freeALLEx(STACK, (void(*)(void*))clear_stack);
 }
 
-void freeALLEx(size_t id, void(*clear)(void*))
+void freeALLEx(const size_t typeList, Clear clear)
 {
-	while (lk[id].pBegin != NULL)
+	while (registers[typeList].pBegin != NULL)
 	{
-		lk[id].aux = lk[id].pBegin;
-		clear(lk[id].pBegin->object);
-		free(lk[id].pBegin->object);
-		lk[id].pBegin = lk[id].pBegin->sig;
-		free(lk[id].aux);
+		registers[typeList].aux = registers[typeList].pBegin;
+		clear(registers[typeList].pBegin->object);
+		free(registers[typeList].pBegin->object);
+		registers[typeList].pBegin = registers[typeList].pBegin->sig;
+		free(registers[typeList].aux);
 	}
-	lk[id].count = 0;
+	registers[typeList].count = 0;
 }
