@@ -21,7 +21,7 @@ Necesitas descargar:
 
 - Un compilador de C, como por ejemplo [GCC](https://jmeubank.github.io/tdm-gcc/download/).
 
-- El archivo `liblist.a` (debes seleccionar dependiendo de la arquitectura de la máquina) lo encuentras en este enlace: https://github.com/MrDave1999/LibraryList/releases/tag/v2.0
+- El archivo `liblist.a` (lo encuentras en este enlace: https://github.com/MrDave1999/LibraryList/releases/tag/v2.0).
 
 Después de haber descargado las herramientas, agregaremos la carpeta `lst` en el directorio `include`, que venga por defecto cuando instalemos el compilador. El archivo `liblist.a` debe estar añadido en la carpeta `lib`.
 
