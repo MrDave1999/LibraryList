@@ -1,5 +1,5 @@
 # LibraryList Generic
-[![LibraryList](https://img.shields.io/badge/List-Generic-blue)](https://github.com/MrDave1999/LibraryList)
+[![LibraryList](https://img.shields.io/badge/C-ListGeneric-blue)](https://github.com/MrDave1999/LibraryList)
 [![LibraryList](https://img.shields.io/badge/LibraryList-v2.0-blue)](https://github.com/MrDave1999/LibraryList)
 
 LibraryList es una biblioteca que permite usar diversas estructuras de datos de forma genérica, esto quiere decir que en un programa se puede tener una lista de objetos de tipo `Vehículo` y en otra objetos de tipo `Conductor`.
@@ -21,7 +21,7 @@ Necesitas descargar:
 
 - Un compilador de C, como por ejemplo [GCC](https://jmeubank.github.io/tdm-gcc/download/).
 
-- El archivo `liblist.a` (debes seleccionar dependiendo de la arquitectura de la máquina), lo encuentras en este enlace: https://github.com/MrDave1999/LibraryList/releases/tag/v2.0
+- El archivo `liblist.a` (debes seleccionar dependiendo de la arquitectura de la máquina) lo encuentras en este enlace: https://github.com/MrDave1999/LibraryList/releases/tag/v2.0
 
 Después de haber descargado las herramientas, agregaremos la carpeta `lst` en el directorio `include`, que venga por defecto cuando instalemos el compilador. El archivo `liblist.a` debe estar añadido en la carpeta `lib`.
 
