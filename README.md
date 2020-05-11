@@ -36,7 +36,7 @@ gcc prueba.c -llist
 
 ### Documentación API
 
-En este [hilo](https://github.com/MrDave1999/LibraryList/wiki/Documentaci%C3%B3n) podrás ver la forma como se debe usar cada función, como por ejemplo, su descripción, parámetros y valor de retorno.
+En este [hilo](https://github.com/MrDave1999/LibraryList/wiki/Documentaci%C3%B3n) podrás ver la descripción, parámetros, valor de retorno y un ejemplo de uso de cada función.
 
 ### Uso
 
