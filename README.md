@@ -34,9 +34,9 @@ Por último, se le debe avisar al enlazador el nombre de la biblioteca para que 
 gcc prueba.c -llist
 ```
 
-### Documentación
+### Documentación API
 
-En el siguiente enlace podrás ver la forma como se debe usar cada función: https://github.com/MrDave1999/LibraryList/wiki/
+En este [hilo](https://github.com/MrDave1999/LibraryList/wiki/Documentaci%C3%B3n) podrás ver la forma como se debe usar cada función, como por ejemplo, su descripción, parámetros y valor de retorno.
 
 ### Uso
 
