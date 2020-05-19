@@ -1,6 +1,6 @@
 /*
 	Copyright (c) 2020 MrDave1999 (David Román)
-
+      
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
@@ -22,11 +22,13 @@
 
 #include <stdlib.h>
 #include "lst/ArrayList.h"
+#include "lst/isRange.h"
+
 #define CAPACITY_DEFAULT	(10)
+#define NEW_CAPACITY 		((al->capacity) + (al->capacity >> 1))
 
 boolean addAL(ArrayList* al, void* object)
 {
-	size_t newCapacity;
 	if (al == NULL || object == NULL)
 	{
 		free(object);
@@ -45,29 +47,50 @@ boolean addAL(ArrayList* al, void* object)
 	}
 	else
 	{
-		if (al->count > al->capacity)
+		if (al->count > al->capacity && setCapacity(al, NEW_CAPACITY))
 		{
-			newCapacity = (al->capacity) + (al->capacity >> 1);
-			if (setCapacity(al, newCapacity))
-			{
-				free(object);
-				return EXIT_FAILURE;
-			}
+			free(object);
+			return EXIT_FAILURE;
 		}
 	}
 	al->ptr[(al->count) - 1] = object;
 	return EXIT_SUCCESS;
 }
 
+boolean addAL_Index(ArrayList* al, const size_t index, void* object)
+{
+	void* elementCurrent, *elementPrev;
+	if(al == NULL || object == NULL)
+	{
+		free(object);
+		return true;
+	}
+	if(al->count == al->capacity && setCapacity(al, NEW_CAPACITY))
+	{
+		free(object);
+		return true;
+	}
+	elementPrev = al->ptr[index];
+	al->ptr[index] = object;
+	++al->count;
+	for(int i = index+1; i != al->count; ++i)
+	{
+		elementCurrent = al->ptr[i];
+		al->ptr[i] = elementPrev;
+		elementPrev = elementCurrent;
+	}
+	return false;
+}
+
 void* getAL(ArrayList* al, const size_t index)
 {
-	return (index >= 0 && index < al->count) ? (al->ptr[index]) : (NULL);
+	return (isRange(al, index)) ? (NULL) : (al->ptr[index]);
 }
 
 void* setAL(ArrayList* al, const size_t index, void* newObject)
 {
 	void* prevObject = NULL;
-	if((newObject != NULL) && (index >= 0 && index < al->count))
+	if(newObject != NULL)
 	{
 		prevObject = al->ptr[index];
 		al->ptr[index] = newObject;
@@ -105,15 +128,13 @@ boolean removeAll_AL(ArrayList* al, const void* key, Equals equals)
 
 boolean iremoveAL(ArrayList* al, const size_t index)
 {
-	if (index >= 0 && index < al->count)
-	{
-		free(al->ptr[index]);
-		for (int i = index + 1; i != al->count; ++i)
-			al->ptr[i - 1] = al->ptr[i];
-		--al->count;
-		return false;
-	}
-	return true;
+	if(isRange(al, index))
+		return true;
+	free(al->ptr[index]);
+	for (int i = index + 1; i != al->count; ++i)
+		al->ptr[i - 1] = al->ptr[i];
+	--al->count;
+	return false;
 }
 
 void clearAL(ArrayList* al)
@@ -151,6 +172,11 @@ boolean isEmptyAL(ArrayList* al)
 
 void* bSearch(ArrayList* al, const void* key, Compare compare)
 {
+	return getAL(al, bSearch_i(al, key, compare));
+}
+
+int bSearch_i(ArrayList* al, const void* key, Compare compare)
+{
 	int first = 0;
 	int end = al->count - 1;
 	int medium;
@@ -158,10 +184,10 @@ void* bSearch(ArrayList* al, const void* key, Compare compare)
 	{
 		medium = (first + end) / 2;
 		if (compare(al->ptr[medium], key) == 0)
-			return al->ptr[medium];
+			return medium;
 		(compare(al->ptr[medium], key) < 0) ? (first = medium + 1) : (end = medium - 1);
 	}
-	return NULL;
+	return -1;
 }
 
 void bsortAL(ArrayList* al, Compare compare)
