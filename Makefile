@@ -21,7 +21,7 @@ lib:
 #New implicit rule.
 %.o: $(FOLDER_C)\%.c
 	$(CC) $(CFLAGS) $< -o $@
-
+ 
 addDTP.o: $(FOLDER_C)\addDTP.c
 ArrayList.o: $(FOLDER_C)\ArrayList.c
 foreach.o: $(FOLDER_C)\foreach.c
