@@ -23,7 +23,7 @@ int main()
 	
 	foreach(int, num, listNum)
 		printf("%d\n", *num);
-	
+	 
 	showInfo(listNum, 0, 0);
 	showInfo(listNum, 0, -1);
 	showInfo(listNum, 5, 6);
