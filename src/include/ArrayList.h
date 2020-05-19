@@ -19,11 +19,11 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-
+ 
 #ifndef _ARRAYLIST_H
 #define _ARRAYLIST_H
 
-#include "MemoryManagement.h"
+#include "def.h"
 
 struct ArrayList
 {
@@ -38,7 +38,8 @@ typedef struct ArrayList ArrayList;
 #define newArrayList() new_object_list(ARRAYLIST, sizeof(ArrayList))
 #define deleteAL(objectAL) delete_object_list(ARRAYLIST, objectAL, (void(*)(void*))clearAL)
 
-boolean addAL(ArrayList*, void*);				
+boolean addAL(ArrayList*, void*);
+boolean addAL_Index(ArrayList*, const size_t, void*);			
 void* getAL(ArrayList*, const size_t);
 void* setAL(ArrayList*, const size_t, void*);
 boolean removeAL(ArrayList*, const void*, Equals equals);
@@ -49,6 +50,7 @@ void* findAL(ArrayList*, const void*, Equals equals);
 size_t sizeAL(ArrayList*);
 boolean isEmptyAL(ArrayList*);
 void* bSearch(ArrayList*, const void*, Compare compare);
+int bSearch_i(ArrayList*, const void*, Compare compare);
 void bsortAL(ArrayList*, Compare compare);
 void* minAL(ArrayList*, Compare compare);
 void* maxAL(ArrayList*, Compare compare);
