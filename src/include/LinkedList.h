@@ -23,7 +23,7 @@
 #ifndef _LINKEDLIST_H
 #define _LINKEDLIST_H
 
-#include "MemoryManagement.h"
+#include "def.h"
 
 struct Node
 {
@@ -47,6 +47,7 @@ typedef struct Node Node;
 #define deleteLK(objectLK) delete_object_list(LINKEDLIST, objectLK, (void(*)(void*))clearLK)
 
 boolean addLK(LinkedList*, void*);
+boolean addLK_Index(LinkedList*, const size_t, void*);
 void* getLK(LinkedList*, const size_t);
 void* setLK(LinkedList*, const size_t, void*);
 boolean removeLK(LinkedList*, const void*, Equals equals);
