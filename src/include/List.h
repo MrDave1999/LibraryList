@@ -18,26 +18,34 @@
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
-*/
+*/ 
 
 #ifndef _LIST_H
 #define _LIST_H
 
+#include "MemoryManagement.h"
 #include "LinkedList.h"
 #include "ArrayList.h"
 #include "foreach.h"
 #include "addDTP.h"
 #include "Queue.h"
 #include "Stack.h"
+#include "isRange.h"
 
 extern LinkedList registers[MAX_LISTS];
-
+ 
 #define add(expr, obj) \
 	_Generic((expr), \
 		ArrayList*  : addAL, \
 		LinkedList* : addLK \
 	)(expr, addDTP(obj))
 
+#define add_i(expr, index, obj) \
+	_Generic((expr), \
+		ArrayList*  : addAL_Index, \
+		LinkedList* : addLK_Index \
+	)(expr, index, addDTP(obj))
+	
 #define get(expr, index) \
 	_Generic((expr), \
 		ArrayList*  : getAL, \
