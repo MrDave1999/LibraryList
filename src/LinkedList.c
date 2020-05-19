@@ -23,10 +23,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "lst/LinkedList.h"
+#include "lst/isRange.h"
 
 boolean addLK(LinkedList* lk, void* object)
 {
-	Node* newNode = malloc(sizeof(Node));
+	Node* newNode;
+	if(lk == NULL || object == NULL)
+	{
+		free(object);
+		return EXIT_FAILURE;
+	}
+	newNode = malloc(sizeof(Node));
 	if (newNode == NULL)
 	{
 		free(object);
@@ -40,24 +47,56 @@ boolean addLK(LinkedList* lk, void* object)
 	return EXIT_SUCCESS;
 }
 
-void* getLK(LinkedList* lk, const size_t index)
+boolean addLK_Index(LinkedList* lk, const size_t index, void* object)
 {
-	size_t i = 0;
-	lk->aux = lk->pBegin;
-	while (lk->aux != NULL)
+	Node* newNode, *penNode;
+	int i;
+	if(lk == NULL || object == NULL)
 	{
-		if (i++ == index)
-			return lk->aux->object;
+		free(object);
+		return true;
+	}
+	newNode = malloc(sizeof(Node));
+	if(newNode == NULL)
+	{
+		free(object);
+		return true;
+	}
+	i = 0;
+	penNode = NULL;
+	lk->aux = lk->pBegin;
+	while(i++ != index)
+	{
+		penNode = lk->aux;
 		lk->aux = lk->aux->sig;
 	}
-	return NULL;
+	(lk->pBegin == lk->aux) ? (lk->pBegin = newNode) : (penNode->sig = newNode);
+	newNode->sig = lk->aux;
+	newNode->object = object;
+	++lk->count;
+	return false;
+}
+
+void* getLK(LinkedList* lk, const size_t index)
+{
+	size_t i;
+	if(isRange(lk, index))
+		return NULL;
+	i = 0;
+	lk->aux = lk->pBegin;
+	while(i++ != index)
+		lk->aux = lk->aux->sig;
+	return lk->aux->object;
 }
 
 void* setLK(LinkedList* lk, const size_t index, void* newObject)
 {
 	void* prevObject = NULL;
-	if((newObject != NULL) && ((prevObject = getLK(lk, index)) != NULL))
+	if(newObject != NULL)
+	{
+		prevObject = getLK(lk, index);
 		lk->aux->object = newObject;
+	}
 	return prevObject;
 }
 
@@ -99,20 +138,20 @@ boolean removeAll_LK(LinkedList* lk, const void* key, Equals equals)
 
 boolean iremoveLK(LinkedList* lk, const size_t index)
 {
-	size_t i = 0;
-	Node* penNode = lk->pBegin;
+	size_t i;
+	Node* penNode;
+	if(isRange(lk, index))
+		return true;
+	i = 0;
+	penNode = NULL;
 	lk->aux = lk->pBegin;
-	while (lk->aux != NULL)
+	while(i++ != index)
 	{
-		if (i++ == index)
-		{
-			removeElement(lk, penNode);
-			return 0;
-		}
 		penNode = lk->aux;
 		lk->aux = lk->aux->sig;
 	}
-	return 1;
+	removeElement(lk, penNode);
+	return false;
 }
 
 void removeElement(LinkedList* lk, Node* penNode)
