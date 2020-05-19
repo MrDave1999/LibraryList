@@ -24,28 +24,13 @@
 #define _MEMORYMANAGEMENT_H
 
 #include <stdint.h>
+#include "def.h"
 
 #define clears freeALL
-#define MAX_LISTS	(3)
-#define true 1
-#define false 0
 
-enum
-{
-	QUEUE,
-	LINKEDLIST = 0,
-	ARRAYLIST,
-	STACK
-};
-
-typedef unsigned char boolean;
-typedef void(*Clear)(void*);
-typedef boolean(*Equals)(const void*, const void*);
-typedef int(*Compare)(const void*, const void*);
-
-void* new_object_list(const size_t, const size_t);
-void delete_object_list(const size_t, void*, Clear clear);
-void freeALLEx(const size_t, Clear clear);
+void* new_object_list(const ListType, const size_t);
+void delete_object_list(const ListType, void*, Clear clear);
+void freeALLEx(const ListType, Clear clear);
 void freeALL(void);
 
 #endif /* _MEMORYMANAGEMENT_H */
