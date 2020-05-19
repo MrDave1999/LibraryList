@@ -21,16 +21,17 @@
 */
 
 #include <stdlib.h>
+#include "lst/MemoryManagement.h"
 #include "lst/ArrayList.h"
 #include "lst/LinkedList.h"
 #include "lst/Stack.h"
 
 LinkedList registers[MAX_LISTS];
 
-void* new_object_list(const size_t typeList, const size_t size)
+void* new_object_list(const ListType lt, const size_t size)
 {
 	void* ptr = calloc(1, size);
-	return (ptr == NULL || addLK(&registers[typeList], ptr)) ? NULL : ptr;
+	return (ptr == NULL || addLK(&registers[lt], ptr)) ? NULL : ptr;
 }
 
 boolean equals(const void* object, const void* key)
@@ -38,10 +39,10 @@ boolean equals(const void* object, const void* key)
 	return object == key;
 }
 
-void delete_object_list(const size_t typeList, void* objectList, Clear clear)
+void delete_object_list(const ListType lt, void* objectList, Clear clear)
 {
 	clear(objectList);
-	removeLK(&registers[typeList], objectList, equals);
+	removeLK(&registers[lt], objectList, equals);
 }
 
 void freeALL()
@@ -51,15 +52,15 @@ void freeALL()
 	freeALLEx(STACK, (void(*)(void*))clear_stack);
 }
 
-void freeALLEx(const size_t typeList, Clear clear)
+void freeALLEx(const ListType lt, Clear clear)
 {
-	while (registers[typeList].pBegin != NULL)
+	while (registers[lt].pBegin != NULL)
 	{
-		registers[typeList].aux = registers[typeList].pBegin;
-		clear(registers[typeList].pBegin->object);
-		free(registers[typeList].pBegin->object);
-		registers[typeList].pBegin = registers[typeList].pBegin->sig;
-		free(registers[typeList].aux);
+		registers[lt].aux = registers[lt].pBegin;
+		clear(registers[lt].pBegin->object);
+		free(registers[lt].pBegin->object);
+		registers[lt].pBegin = registers[lt].pBegin->sig;
+		free(registers[lt].aux);
 	}
-	registers[typeList].count = 0;
+	registers[lt].count = 0;
 }
