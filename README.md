@@ -8,8 +8,6 @@ Hasta ahora las estructuras de datos que maneja la biblioteca son:
 
 - LinkedList.
 - ArrayList.
-- Queue.
-- Stack.
 
 ### Requisitos
 
