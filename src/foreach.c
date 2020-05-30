@@ -24,7 +24,7 @@
 
 void* getNextElementAL(ArrayList* al)
 {
-	return al->ptr[al->i];
+	return al->pArray[al->i];
 }
 
 void* getNextElementLK(LinkedList* lk)
@@ -33,7 +33,6 @@ void* getNextElementLK(LinkedList* lk)
 	if(lk->i == 0)
 		lk->aux = lk->pBegin;
 	ob = lk->aux->object;
-	lk->aux = lk->aux->sig;
+	lk->aux = lk->aux->next;
 	return ob;
 }
-
