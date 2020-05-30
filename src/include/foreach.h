@@ -30,7 +30,8 @@ void* getNextElementLK(LinkedList*);
 	_Generic((expr), \
 		ArrayList*  : getNextElementAL((ArrayList*)expr), \
 		LinkedList* : getNextElementLK((LinkedList*)expr), \
-		Stack* : 	  getNextElementLK((LinkedList*)expr) \
+		Stack* : getNextElementLK((LinkedList*)expr), \
+		Queue* : getNextElementLK((LinkedList*)expr)  \
 	)
 	
 #define foreach(type, nameVar, _ptr) \
