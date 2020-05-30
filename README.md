@@ -1,6 +1,6 @@
 # LibraryList Generic
 [![LibraryList](https://img.shields.io/badge/C-ListGeneric-blue)](https://github.com/MrDave1999/LibraryList)
-[![LibraryList](https://img.shields.io/badge/LibraryList-v2.5-blue)](https://github.com/MrDave1999/LibraryList)
+[![LibraryList](https://img.shields.io/badge/LibraryList-v3.0-blue)](https://github.com/MrDave1999/LibraryList)
 
 LibraryList es una biblioteca que permite usar diversas estructuras de datos de forma genérica, esto quiere decir que en un programa se puede tener una lista de objetos de tipo `Vehículo` y en otra objetos de tipo `Conductor`.
 
@@ -21,7 +21,7 @@ Necesitas descargar:
 
 - Un compilador de C, como por ejemplo [GCC](https://jmeubank.github.io/tdm-gcc/download/).
 
-- El archivo `LibraryList_v2.5` (lo encuentras en este enlace: https://github.com/MrDave1999/LibraryList/releases/tag/v2.5).
+- El archivo `LibraryList_v3.0` (lo encuentras en este enlace: https://github.com/MrDave1999/LibraryList/releases/tag/v3.0).
 
 Después de haber descargado las herramientas, agregaremos la carpeta `lst` en el directorio `include`, que venga por defecto cuando instalemos el compilador. El archivo `liblist.a` debe estar añadido en la carpeta `lib`.
 
@@ -40,8 +40,11 @@ En este [hilo](https://github.com/MrDave1999/LibraryList/wiki/Documentaci%C3%B3n
 
 ### Uso
 
-En este sencillo ejemplo se muestra en pantalla los nombres de cada persona:
+**1.- Ejemplo:** Mostrar en pantalla los nombres de cada persona.
 ```c
+/* En este ejemplo la macro "add" añade elementos a una lista doblemente enlazada. */
+
+#include <stdio.h>
 #include <lst/List.h>
 
 int main(void)
@@ -65,6 +68,38 @@ int main(void)
 		también el objeto al que apuntaba listaPersonas 
 	*/
 	delete(listaPersonas);
+	return 0;
+}
+```
+
+**2.- Ejemplo:** Muestra en pantalla los números del 1 al 4.
+```c
+/* En este ejemplo la macro "add" añade elementos a un arreglo dinámico. */
+
+#include <stdio.h>
+#include <lst/List.h>
+
+int main(void)
+{
+	/* Creamos la lista vacía */
+	ArrayList* listaNums = newArrayList();
+	
+	printf("Elementos: %d\n", size(listaNums));
+	
+	/* Añadimos elementos a la lista */
+	add(listaNums, 1);
+	add(listaNums, 2);
+	add(listaNums, 3);
+	add(listaNums, 4);
+	
+	/* Imprimimos los elementos de la lista */
+	foreach(int, num, listaNums)
+		printf("%d\n", *num);
+	
+	/* Liberamos los elementos de la lista y 
+		también el objeto al que apuntaba listNums 
+	*/
+	delete(listNums);
 	return 0;
 }
 ```
