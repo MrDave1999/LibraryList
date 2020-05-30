@@ -23,27 +23,21 @@
 #ifndef _STACK_H
 #define _STACK_H
 
-#include "LinkedList.h"
+#include "Queue.h"
 
 struct Stack
 {
-	size_t i;
-	size_t count;
-	struct Node* pTop;
-	struct Node* aux;
+	int i;
+	int count;
+	struct ListNode* pBegin;
+	struct ListNode* aux;
 };
 
 typedef struct Stack Stack;
+#define newStack() new_object_list(LINKEDLIST, sizeof(Stack))
 
-#define push(expr, obj) push_(expr, addDTP(obj))
-#define newStack() new_object_list(STACK, sizeof(Stack))
-#define delete_stack(objectStack) delete_object_list(STACK, objectStack, (void(*)(void*))clear_stack)
-
-boolean push_(Stack*, void*);
-void* pop(Stack*);
-void* getTop(Stack*);
-size_t size_stack(Stack*);
-boolean isEmpty_stack(Stack*);
-void clear_stack(Stack*);
+boolean addFirstST(Stack*, void*);
+void* removeFirstST(Stack*);
+void* getTopST(Stack*);
 
 #endif /* _STACK_H */
