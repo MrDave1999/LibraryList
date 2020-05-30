@@ -25,71 +25,100 @@
 #include "lst/LinkedList.h"
 #include "lst/isRange.h"
 
-boolean addLK(LinkedList* lk, void* object)
+void* createNode(void* ptr, void* object, size_t size)
 {
-	Node* newNode;
-	if(lk == NULL || object == NULL)
+	void* newNode;
+	if(ptr == NULL || object == NULL)
 	{
 		free(object);
-		return EXIT_FAILURE;
+		return NULL;
 	}
-	newNode = malloc(sizeof(Node));
+	newNode = malloc(size);
 	if (newNode == NULL)
 	{
 		free(object);
-		return EXIT_FAILURE;
+		return NULL;
 	}
-	++lk->count;
-	(lk->pBegin == NULL) ? (lk->pBegin = newNode) : (lk->pEnd->sig = newNode);
-	newNode->sig = NULL;
-	newNode->object = object;
-	lk->pEnd = newNode;
-	return EXIT_SUCCESS;
+	return newNode;
 }
 
-boolean addLK_Index(LinkedList* lk, const size_t index, void* object)
+boolean addLastLK(LinkedList* lk, void* object)
 {
-	Node* newNode, *penNode;
-	int i;
-	if(lk == NULL || object == NULL)
-	{
-		free(object);
-		return true;
-	}
-	newNode = malloc(sizeof(Node));
+	Node* newNode = createNode(lk, object, sizeof(Node));
 	if(newNode == NULL)
-	{
-		free(object);
 		return true;
-	}
-	i = 0;
-	penNode = NULL;
-	lk->aux = lk->pBegin;
-	while(i++ != index)
+	if(lk->pBegin == NULL)
 	{
-		penNode = lk->aux;
-		lk->aux = lk->aux->sig;
+		lk->pBegin = newNode;
+		newNode->prev = NULL;
 	}
-	(lk->pBegin == lk->aux) ? (lk->pBegin = newNode) : (penNode->sig = newNode);
-	newNode->sig = lk->aux;
+	else
+	{
+		lk->pEnd->next = newNode;
+		newNode->prev = lk->pEnd;
+	}
+	newNode->next = NULL;
+	lk->pEnd = newNode;
 	newNode->object = object;
 	++lk->count;
 	return false;
 }
 
-void* getLK(LinkedList* lk, const size_t index)
+boolean addFirstLK(LinkedList* lk, void* object)
 {
-	size_t i;
+	Node* newNode = createNode(lk, object, sizeof(Node));
+	if(newNode == NULL)
+		return true;
+	(lk->pBegin == NULL) ? (lk->pEnd = newNode) : (lk->pBegin->prev = newNode);
+	newNode->next = lk->pBegin;
+	newNode->prev = NULL;
+	lk->pBegin = newNode;
+	newNode->object = object;
+	++lk->count;
+	return false;
+}
+
+boolean addLK_Index(LinkedList* lk, const int index, void* object)
+{
+	Node* newNode, *aux;
+	int i;
+	newNode = createNode(lk, object, sizeof(Node));
+	if(newNode == NULL)
+		return true;
+	i = 0;
+	aux = lk->pBegin;
+	while(i++ != index)
+		aux = aux->next;
+	if(lk->pBegin == aux)
+	{
+		lk->pBegin = newNode;
+		newNode->prev = NULL;
+	}
+	else
+	{
+		aux->prev->next = newNode;
+		newNode->prev = aux->prev;
+	}
+	newNode->next = aux;
+	aux->prev = newNode;
+	newNode->object = object;
+	++lk->count;
+	return false;
+}
+
+void* getLK(LinkedList* lk, const int index)
+{
+	int i;
 	if(isRange(lk, index))
 		return NULL;
 	i = 0;
 	lk->aux = lk->pBegin;
 	while(i++ != index)
-		lk->aux = lk->aux->sig;
+		lk->aux = lk->aux->next;
 	return lk->aux->object;
 }
 
-void* setLK(LinkedList* lk, const size_t index, void* newObject)
+void* setLK(LinkedList* lk, const int index, void* newObject)
 {
 	void* prevObject = NULL;
 	if(newObject != NULL)
@@ -100,19 +129,33 @@ void* setLK(LinkedList* lk, const size_t index, void* newObject)
 	return prevObject;
 }
 
+void* removeFirstLK(LinkedList* lk)
+{
+	Node* aux;
+	void* ob;
+	if(lk->pBegin == NULL)
+		return NULL;
+	aux = lk->pBegin;
+	ob = aux->object;
+	--lk->count;
+	lk->pBegin = lk->pBegin->next;
+	if(lk->pBegin != NULL)
+		lk->pBegin->prev = NULL;
+	free(aux);
+	return ob;
+}
+
 boolean removeLK(LinkedList* lk, const void* key, Equals equals)
 {
-	Node* penNode = lk->pBegin;
 	lk->aux = lk->pBegin;
 	while (lk->aux != NULL)
 	{
 		if (equals(lk->aux->object, key))
 		{
-			removeElement(lk, penNode);
+			removeNode(lk);
 			return false;
 		}
-		penNode = lk->aux;
-		lk->aux = lk->aux->sig;
+		lk->aux = lk->aux->next;
 	}
 	return true;
 }
@@ -120,58 +163,57 @@ boolean removeLK(LinkedList* lk, const void* key, Equals equals)
 boolean removeAll_LK(LinkedList* lk, const void* key, Equals equals)
 {
 	boolean isExist = true;
-	Node* penNode = lk->pBegin;
 	lk->aux = lk->pBegin;
 	while (lk->aux != NULL)
 	{
 		if (equals(lk->aux->object, key))
 		{
-			removeElement(lk, penNode);
+			removeNode(lk);
 			isExist = false;
 			continue;
 		}
-		penNode = lk->aux;
-		lk->aux = lk->aux->sig;
+		lk->aux = lk->aux->next;
 	}
 	return isExist;
 }
 
-boolean iremoveLK(LinkedList* lk, const size_t index)
+boolean iremoveLK(LinkedList* lk, const int index)
 {
-	size_t i;
-	Node* penNode;
+	int i;
 	if(isRange(lk, index))
 		return true;
 	i = 0;
-	penNode = NULL;
 	lk->aux = lk->pBegin;
 	while(i++ != index)
-	{
-		penNode = lk->aux;
-		lk->aux = lk->aux->sig;
-	}
-	removeElement(lk, penNode);
+		lk->aux = lk->aux->next;
+	removeNode(lk);
 	return false;
 }
-
-void removeElement(LinkedList* lk, Node* penNode)
+           
+void removeNode(LinkedList* lk)
 {
 	Node* aux2 = lk->aux;
-	if (lk->pBegin->sig == NULL)
+	if (lk->pBegin->next == NULL)
 	{
 		lk->pBegin = NULL;
 		lk->pEnd = NULL;
 	}
 	else if (lk->pBegin == lk->aux)
-		lk->pBegin = lk->pBegin->sig;
+	{
+		lk->pBegin = lk->pBegin->next;
+		lk->pBegin->prev = NULL;
+	}
 	else if (lk->pEnd == lk->aux)
 	{
-		penNode->sig = NULL;
-		lk->pEnd = penNode;
+		lk->aux->prev->next = NULL;
+		lk->pEnd = lk->aux->prev;
 	}
 	else
-		penNode->sig = lk->aux->sig;
-	lk->aux = lk->aux->sig;
+	{  
+		lk->aux->prev->next = lk->aux->next;
+		lk->aux->next->prev = lk->aux->prev;
+	}
+	lk->aux = lk->aux->next;
 	free(aux2->object);
 	free(aux2);
 	--lk->count;
@@ -180,32 +222,29 @@ void removeElement(LinkedList* lk, Node* penNode)
 void clearLK(LinkedList* lk)
 {
 	Node* aux;
-	if (lk->count != 0)
+	while (lk->pBegin != NULL)
 	{
-		while (lk->pBegin != NULL)
-		{
-			aux = lk->pBegin;
-			free(lk->pBegin->object);
-			lk->pBegin = lk->pBegin->sig;
-			free(aux);
-		}
-		lk->count = 0;
+		aux = lk->pBegin;
+		free(lk->pBegin->object);
+		lk->pBegin = lk->pBegin->next;
+		free(aux);
 	}
+	lk->count = 0;
 }
 
 void* findLK(LinkedList* lk, const void* key, Equals equals)
 {
-	lk->aux = lk->pBegin;
-	while (lk->aux != NULL)
+	Node* aux = lk->pBegin;
+	while (aux != NULL)
 	{
-		if (equals(lk->aux->object, key))
-			return lk->aux->object;
-		lk->aux = lk->aux->sig;
+		if (equals(aux->object, key))
+			return aux->object;
+		aux = aux->next;
 	}
 	return NULL;
 }
 
-size_t sizeLK(LinkedList* lk)
+int sizeLK(LinkedList* lk)
 {
 	return lk->count;
 }
@@ -215,32 +254,33 @@ boolean isEmptyLK(LinkedList* lk)
 	return lk->pBegin == NULL;
 }
 
-void bsortLK(LinkedList* lk, Compare compare)
+boolean bsortLK(LinkedList* lk, Compare compare)
 {
 	Node* aux;
 	void* p;
 	Node* pEnd = lk->pEnd;
-	Node* pPrev;//pPrevious
 	boolean change = false;
+	if(lk->count == 0)
+		return true;
 	while(1)
 	{
 		aux = lk->pBegin;
 		while(aux != pEnd)
 		{
-			if(compare(aux->object, aux->sig->object) > 0)
+			if(compare(aux->object, aux->next->object) > 0)
 			{			
-				p = aux->sig->object;
-				aux->sig->object = aux->object;
+				p = aux->next->object;
+				aux->next->object = aux->object;
 				aux->object = p;
 				change = true;
 			}	
-			pPrev = aux;
-			aux = aux->sig;
+			aux = aux->next;
 		}
 		if(!change) break;
-		pEnd = pPrev;
+		pEnd = pEnd->prev;
 		change = false;
 	}
+	return false;
 }
 
 void* minLK(LinkedList* lk, Compare compare)
@@ -250,12 +290,12 @@ void* minLK(LinkedList* lk, Compare compare)
 	if(lk->count == 0)
 		return NULL;
 	candidate = lk->pBegin->object;
-	aux = lk->pBegin->sig;
+	aux = lk->pBegin->next;
 	while(aux != NULL)
 	{
 		if(compare(aux->object, candidate) < 0)
 			candidate = aux->object;
-		aux = aux->sig;
+		aux = aux->next;
 	}
 	return candidate;
 }
@@ -267,12 +307,12 @@ void* maxLK(LinkedList* lk, Compare compare)
 	if(lk->count == 0)
 		return NULL;
 	candidate = lk->pBegin->object;
-	aux = lk->pBegin->sig;
+	aux = lk->pBegin->next;
 	while(aux != NULL)
 	{
 		if(compare(aux->object, candidate) > 0)
 			candidate = aux->object;
-		aux = aux->sig;
+		aux = aux->next;
 	}
 	return candidate;
 }
