@@ -23,13 +23,27 @@
 #ifndef _QUEUE_H
 #define _QUEUE_H
 
-#include "LinkedList.h"
+struct ListNode
+{
+	void* object;
+	struct ListNode* next;
+};
 
-#define enqueue add
-#define newQueue() newLinkedList()
-typedef LinkedList Queue;
+struct Queue
+{
+	int i;
+	int count;
+	struct ListNode* pBegin;
+	struct ListNode* aux;
+	struct ListNode* pEnd;
+};
 
-void* dequeue(Queue*);
-void* getFront(Queue*);
+typedef struct Queue Queue;
+typedef struct ListNode ListNode;
+#define newQueue() new_object_list(LINKEDLIST, sizeof(Queue))
+
+boolean addLastQE(Queue*, void*);
+void* removeFirstQE(Queue*);
+void* getFrontQE(Queue*);
 
 #endif /* _QUEUE_H */
