@@ -23,14 +23,18 @@
 #ifndef _MEMORYMANAGEMENT_H
 #define _MEMORYMANAGEMENT_H
 
-#include <stdint.h>
+#include "LinkedList.h"
 #include "def.h"
 
 #define clears freeALL
+#define freeALL freeAll
 
-void* new_object_list(const ListType, const size_t);
-void delete_object_list(const ListType, void*, Clear clear);
-void freeALLEx(const ListType, Clear clear);
+extern LinkedList registers[MAX_LISTS];
+
+boolean pointerEquals(const void*, const void*);
+void* new_object_list(const ListType, size_t);
+void delete_object_list(const ListType, void*, Clear);
+void freeALLEx(const ListType, Clear);
 void freeALL(void);
 
 #endif /* _MEMORYMANAGEMENT_H */
