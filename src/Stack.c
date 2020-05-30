@@ -20,46 +20,28 @@
 	SOFTWARE.
 */
 
+#include "lst/LinkedList.h"
 #include "lst/Queue.h"
 #include "lst/Stack.h"
-#include <stdlib.h>
 
-boolean push_(Stack* st, void* object)
+boolean addFirstST(Stack* st, void* object)
 {
-	Node* newNode = malloc(sizeof(Node));
+	ListNode* newNode = createNode(st, object, sizeof(ListNode));
 	if(newNode == NULL)
-	{
-		free(object);
-		return EXIT_FAILURE;
-	}
+		return true;
 	newNode->object = object;
 	++st->count;
-	newNode->sig = st->pTop;
-	st->pTop = newNode;
-	return EXIT_SUCCESS;
+	newNode->next = st->pBegin;
+	st->pBegin = newNode;
+	return false;
 }
 
-void* pop(Stack* st)
+void* removeFirstST(Stack* st)
 {
-	return dequeue((Queue*)st);
+	return removeFirstQE((Queue*)st);
 }
 
-void* getTop(Stack* st)
+void* getTopST(Stack* st)
 {
-	return st->pTop->object;
-}
-
-size_t size_stack(Stack* st)
-{
-	return st->count;
-}
-
-boolean isEmpty_stack(Stack* st)
-{
-	return st->pTop == NULL;
-}
-
-void clear_stack(Stack* st)
-{
-	clearLK((LinkedList*)st);
+	return st->pBegin->object;
 }
