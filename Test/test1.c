@@ -21,7 +21,7 @@ int main()
 		
 	int* number = dequeue(listNumber);
 	printf("One data in list: %d\n", *number);
-	free(number);
+	free(number); 
 	
 	printf("(2) isEmpty: %d, size: %d\n\n", isEmpty(listNumber), size(listNumber));
 	foreach(int, number, listNumber)
