@@ -24,32 +24,30 @@
 #include "lst/MemoryManagement.h"
 #include "lst/ArrayList.h"
 #include "lst/LinkedList.h"
-#include "lst/Stack.h"
 
 LinkedList registers[MAX_LISTS];
 
-void* new_object_list(const ListType lt, const size_t size)
+void* new_object_list(const ListType lt, size_t size)
 {
 	void* ptr = calloc(1, size);
-	return (ptr == NULL || addLK(&registers[lt], ptr)) ? NULL : ptr;
-}
-
-boolean equals(const void* object, const void* key)
-{
-	return object == key;
+	return (ptr == NULL || addLastLK(&registers[lt], ptr)) ? NULL : ptr;
 }
 
 void delete_object_list(const ListType lt, void* objectList, Clear clear)
 {
 	clear(objectList);
-	removeLK(&registers[lt], objectList, equals);
+	removeLK(&registers[lt], objectList, pointerEquals);
+}
+
+boolean pointerEquals(const void* object, const void* key)
+{
+	return object == key;
 }
 
 void freeALL()
 {
 	freeALLEx(LINKEDLIST, (void(*)(void*))clearLK);
 	freeALLEx(ARRAYLIST, (void(*)(void*))clearAL);
-	freeALLEx(STACK, (void(*)(void*))clear_stack);
 }
 
 void freeALLEx(const ListType lt, Clear clear)
@@ -59,7 +57,7 @@ void freeALLEx(const ListType lt, Clear clear)
 		registers[lt].aux = registers[lt].pBegin;
 		clear(registers[lt].pBegin->object);
 		free(registers[lt].pBegin->object);
-		registers[lt].pBegin = registers[lt].pBegin->sig;
+		registers[lt].pBegin = registers[lt].pBegin->next;
 		free(registers[lt].aux);
 	}
 	registers[lt].count = 0;
