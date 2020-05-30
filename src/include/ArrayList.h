@@ -27,33 +27,35 @@
 
 struct ArrayList
 {
-	void** ptr;
-	size_t capacity;
-	size_t i;
-	size_t count;
+	void** pArray;
+	int capacity;
+	int i;
+	int count;
 };
 
 typedef struct ArrayList ArrayList;
 
+#define CAPACITY_DEFAULT	(10)
+#define NEW_CAPACITY(expr) 	((expr->capacity) + (expr->capacity >> 1))
 #define newArrayList() new_object_list(ARRAYLIST, sizeof(ArrayList))
 #define deleteAL(objectAL) delete_object_list(ARRAYLIST, objectAL, (void(*)(void*))clearAL)
 
-boolean addAL(ArrayList*, void*);
-boolean addAL_Index(ArrayList*, const size_t, void*);			
-void* getAL(ArrayList*, const size_t);
-void* setAL(ArrayList*, const size_t, void*);
-boolean removeAL(ArrayList*, const void*, Equals equals);
-boolean removeAll_AL(ArrayList*, const void*, Equals equals);
-boolean iremoveAL(ArrayList*, const size_t);
+boolean addLastAL(ArrayList*, void*);
+boolean addAL_Index(ArrayList*, const int, void*);			
+void* getAL(ArrayList*, const int);
+void* setAL(ArrayList*, const int, void*);
+boolean removeAL(ArrayList*, const void*, Equals);
+boolean removeAll_AL(ArrayList*, const void*, Equals);
+boolean iremoveAL(ArrayList*, const int);
 void clearAL(ArrayList*);
-void* findAL(ArrayList*, const void*, Equals equals);
-size_t sizeAL(ArrayList*);
+void* findAL(ArrayList*, const void*, Equals);
+int sizeAL(ArrayList*);
 boolean isEmptyAL(ArrayList*);
-void* bSearch(ArrayList*, const void*, Compare compare);
-int bSearch_i(ArrayList*, const void*, Compare compare);
-void bsortAL(ArrayList*, Compare compare);
-void* minAL(ArrayList*, Compare compare);
-void* maxAL(ArrayList*, Compare compare);
-boolean setCapacity(ArrayList*, const size_t);
+void* bSearch(ArrayList*, const void*, Compare);
+int bSearch_i(ArrayList*, const void*, Compare);
+boolean bsortAL(ArrayList*, Compare);
+void* minAL(ArrayList*, Compare);
+void* maxAL(ArrayList*, Compare);
+boolean setCapacity(ArrayList*, const int);
 
 #endif /* _ARRAYLIST_H */
