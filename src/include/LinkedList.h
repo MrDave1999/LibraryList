@@ -28,13 +28,14 @@
 struct Node
 {
 	void* object;
-	struct Node* sig;
+	struct Node* next;
+	struct Node* prev;
 };
 
 struct LinkedList
 {
-	size_t i;
-	size_t count;
+	int i;
+	int count;
 	struct Node* pBegin;
 	struct Node* aux;
 	struct Node* pEnd;
@@ -43,23 +44,27 @@ struct LinkedList
 typedef struct LinkedList LinkedList;
 typedef struct Node Node;
 
+#include "SortedList.h"
 #define newLinkedList() new_object_list(LINKEDLIST, sizeof(LinkedList))
 #define deleteLK(objectLK) delete_object_list(LINKEDLIST, objectLK, (void(*)(void*))clearLK)
 
-boolean addLK(LinkedList*, void*);
-boolean addLK_Index(LinkedList*, const size_t, void*);
-void* getLK(LinkedList*, const size_t);
-void* setLK(LinkedList*, const size_t, void*);
-boolean removeLK(LinkedList*, const void*, Equals equals);
-boolean removeAll_LK(LinkedList*, const void*, Equals equals);
-boolean iremoveLK(LinkedList*, const size_t);
-void removeElement(LinkedList*, Node*);
+void* createNode(void*, void*, size_t);
+boolean addLastLK(LinkedList*, void*);
+boolean addFirstLK(LinkedList*, void*);
+boolean addLK_Index(LinkedList*, const int, void*);
+void* getLK(LinkedList*, const int);
+void* setLK(LinkedList*, const int, void*);
+void* removeFirstLK(LinkedList* lk);
+boolean removeLK(LinkedList*, const void*, Equals);
+boolean removeAll_LK(LinkedList*, const void*, Equals);
+boolean iremoveLK(LinkedList*, const int);
+void removeNode(LinkedList*);
 void clearLK(LinkedList*);
-void* findLK(LinkedList*, const void*, Equals equals);
-size_t sizeLK(LinkedList*);
+void* findLK(LinkedList*, const void*, Equals);
+int sizeLK(LinkedList*);
 boolean isEmptyLK(LinkedList*);
-void bsortLK(LinkedList*, Compare compare);
-void* minLK(LinkedList*, Compare compare);
-void* maxLK(LinkedList*, Compare compare);
+boolean bsortLK(LinkedList*, Compare);
+void* minLK(LinkedList*, Compare);
+void* maxLK(LinkedList*, Compare);
 
 #endif /* _LINKEDLIST_H */
