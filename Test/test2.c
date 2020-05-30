@@ -22,7 +22,7 @@ int main()
 	char* name = pop(listNames);
 	printf("One name in list: %s\n", name);
 	free(name);
-	
+	 
 	printf("(2) isEmpty: %d, size: %d\n\n", isEmpty(listNames), size(listNames));
 	foreach(char, name, listNames)
 		printf("%s\n", name);
