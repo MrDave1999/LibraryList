@@ -20,24 +20,38 @@
 	SOFTWARE.
 */
 
+#include "lst/LinkedList.h"
 #include "lst/Queue.h"
 #include <stdlib.h>
 
-void* dequeue(Queue* qe)
+boolean addLastQE(Queue* qe, void* object)
 {
-	Node* aux;
+	ListNode* newNode = createNode(qe, object, sizeof(ListNode));
+	if(newNode == NULL)
+		return true;
+	(qe->pBegin == NULL) ? (qe->pBegin = newNode) : (qe->pEnd->next = newNode);
+	newNode->next = NULL;
+	qe->pEnd = newNode;
+	++qe->count;
+	newNode->object = object;
+	return false;
+}
+
+void* removeFirstQE(Queue* qe)
+{
+	ListNode* aux;
 	void* ob;
 	if(qe->pBegin == NULL)
 		return NULL;
 	aux = qe->pBegin;
 	ob = aux->object;
 	--qe->count;
-	qe->pBegin = qe->pBegin->sig;
+	qe->pBegin = qe->pBegin->next;
 	free(aux);
 	return ob;
 }
 
-void* getFront(Queue* qe)
+void* getFrontQE(Queue* qe)
 {
 	return qe->pBegin->object;
 }
