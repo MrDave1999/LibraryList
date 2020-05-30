@@ -23,18 +23,16 @@
 #ifndef _DEF_H
 #define _DEF_H
 
-#include <stdint.h>
+#include <stddef.h>
 
-#define MAX_LISTS	(3)
+#define MAX_LISTS	(2)
 #define true 1
 #define false 0
 
 enum ListType
 {
-	QUEUE,
-	LINKEDLIST = 0,
-	ARRAYLIST,
-	STACK
+	LINKEDLIST,
+	ARRAYLIST
 };
 
 typedef enum ListType ListType;
