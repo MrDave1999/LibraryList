@@ -24,40 +24,33 @@
 #include "lst/ArrayList.h"
 #include "lst/isRange.h"
 
-#define CAPACITY_DEFAULT	(10)
-#define NEW_CAPACITY 		((al->capacity) + (al->capacity >> 1))
-
-boolean addAL(ArrayList* al, void* object)
+boolean addLastAL(ArrayList* al, void* object)
 {
 	if (al == NULL || object == NULL)
 	{
 		free(object);
-		return EXIT_FAILURE;
+		return true;
 	}
-	++al->count;
-	if (al->ptr == NULL)
+	if (al->pArray == NULL)
 	{
 		if (al->capacity == 0)
 			al->capacity = CAPACITY_DEFAULT;
 		if (setCapacity(al, al->capacity))
 		{
 			free(object);
-			return EXIT_FAILURE;
+			return true;
 		}
 	}
-	else
+	else if (al->count == al->capacity && setCapacity(al, NEW_CAPACITY(al)))
 	{
-		if (al->count > al->capacity && setCapacity(al, NEW_CAPACITY))
-		{
-			free(object);
-			return EXIT_FAILURE;
-		}
+		free(object);
+		return true;
 	}
-	al->ptr[(al->count) - 1] = object;
-	return EXIT_SUCCESS;
+	al->pArray[++al->count - 1] = object;
+	return false;
 }
 
-boolean addAL_Index(ArrayList* al, const size_t index, void* object)
+boolean addAL_Index(ArrayList* al, const int index, void* object)
 {
 	void* elementCurrent, *elementPrev;
 	if(al == NULL || object == NULL)
@@ -65,35 +58,35 @@ boolean addAL_Index(ArrayList* al, const size_t index, void* object)
 		free(object);
 		return true;
 	}
-	if(al->count == al->capacity && setCapacity(al, NEW_CAPACITY))
+	if(al->count == al->capacity && setCapacity(al, NEW_CAPACITY(al)))
 	{
 		free(object);
 		return true;
 	}
-	elementPrev = al->ptr[index];
-	al->ptr[index] = object;
+	elementPrev = al->pArray[index];
+	al->pArray[index] = object;
 	++al->count;
 	for(int i = index+1; i != al->count; ++i)
 	{
-		elementCurrent = al->ptr[i];
-		al->ptr[i] = elementPrev;
+		elementCurrent = al->pArray[i];
+		al->pArray[i] = elementPrev;
 		elementPrev = elementCurrent;
 	}
 	return false;
 }
 
-void* getAL(ArrayList* al, const size_t index)
+void* getAL(ArrayList* al, const int index)
 {
-	return (isRange(al, index)) ? (NULL) : (al->ptr[index]);
+	return (isRange(al, index)) ? (NULL) : (al->pArray[index]);
 }
 
-void* setAL(ArrayList* al, const size_t index, void* newObject)
+void* setAL(ArrayList* al, const int index, void* newObject)
 {
 	void* prevObject = NULL;
 	if(newObject != NULL)
 	{
-		prevObject = al->ptr[index];
-		al->ptr[index] = newObject;
+		prevObject = al->pArray[index];
+		al->pArray[index] = newObject;
 	}
 	return prevObject;
 }
@@ -102,7 +95,7 @@ boolean removeAL(ArrayList* al, const void* key, Equals equals)
 {
 	for (int i = 0; i != al->count; ++i)
 	{
-		if (equals(al->ptr[i], key))
+		if (equals(al->pArray[i], key))
 		{
 			iremoveAL(al, i);
 			return false;
@@ -116,7 +109,7 @@ boolean removeAll_AL(ArrayList* al, const void* key, Equals equals)
 	boolean isExist = true;
 	for (int i = 0; i != al->count; ++i)
 	{
-		if (equals(al->ptr[i], key))
+		if (equals(al->pArray[i], key))
 		{
 			iremoveAL(al, i);
 			--i;
@@ -126,13 +119,13 @@ boolean removeAll_AL(ArrayList* al, const void* key, Equals equals)
 	return isExist;
 }
 
-boolean iremoveAL(ArrayList* al, const size_t index)
+boolean iremoveAL(ArrayList* al, const int index)
 {
 	if(isRange(al, index))
 		return true;
-	free(al->ptr[index]);
+	free(al->pArray[index]);
 	for (int i = index + 1; i != al->count; ++i)
-		al->ptr[i - 1] = al->ptr[i];
+		al->pArray[i - 1] = al->pArray[i];
 	--al->count;
 	return false;
 }
@@ -142,11 +135,11 @@ void clearAL(ArrayList* al)
 	if (al->count != 0)
 	{
 		for (int i = 0; i != al->count; ++i)
-			free(al->ptr[i]);
-		free(al->ptr);
+			free(al->pArray[i]);
+		free(al->pArray);
 		al->count = 0;
 		al->capacity = 0;
-		al->ptr = NULL;
+		al->pArray = NULL;
 	}  
 }
 
@@ -154,20 +147,20 @@ void* findAL(ArrayList* al, const void* key, Equals equals)
 {
 	for (int i = 0; i != al->count; ++i)
 	{
-		if (equals(al->ptr[i], key))
-			return al->ptr[i];
+		if (equals(al->pArray[i], key))
+			return al->pArray[i];
 	}
 	return NULL;
 }
 
-size_t sizeAL(ArrayList* al)
+int sizeAL(ArrayList* al)
 {
 	return al->count;
 }
 
 boolean isEmptyAL(ArrayList* al)
 {
-	return al->ptr == NULL;
+	return al->pArray == NULL;
 }
 
 void* bSearch(ArrayList* al, const void* key, Compare compare)
@@ -177,33 +170,37 @@ void* bSearch(ArrayList* al, const void* key, Compare compare)
 
 int bSearch_i(ArrayList* al, const void* key, Compare compare)
 {
+	int cmp;
 	int first = 0;
 	int end = al->count - 1;
 	int medium;
 	while (first <= end)
 	{
 		medium = (first + end) / 2;
-		if (compare(al->ptr[medium], key) == 0)
+		cmp = compare(al->pArray[medium], key);
+		if (cmp == 0)
 			return medium;
-		(compare(al->ptr[medium], key) < 0) ? (first = medium + 1) : (end = medium - 1);
+		(cmp < 0) ? (first = medium + 1) : (end = medium - 1);
 	}
 	return -1;
 }
 
-void bsortAL(ArrayList* al, Compare compare)
+boolean bsortAL(ArrayList* al, Compare compare)
 {
 	void* aux;
 	size_t len = al->count;
+	if(len == 0)
+		return true;
 	boolean change = false;
 	while(1)
 	{
 		for(int i = 1; i != len; ++i)
 		{
-			if(compare(al->ptr[i - 1], al->ptr[i]) > 0)
+			if(compare(al->pArray[i - 1], al->pArray[i]) > 0)
 			{			
-				aux = al->ptr[i];
-				al->ptr[i] = al->ptr[i - 1];
-				al->ptr[i - 1] = aux;
+				aux = al->pArray[i];
+				al->pArray[i] = al->pArray[i - 1];
+				al->pArray[i - 1] = aux;
 				change = true;
 			}	
 		}
@@ -211,6 +208,7 @@ void bsortAL(ArrayList* al, Compare compare)
 		--len;
 		change = false;
 	}
+	return false;
 }
 
 void* minAL(ArrayList* al, Compare compare)
@@ -218,11 +216,11 @@ void* minAL(ArrayList* al, Compare compare)
 	void* candidate;
 	if(al->count == 0)
 		return NULL;
-	candidate = al->ptr[0];
+	candidate = al->pArray[0];
 	for(int i = 1; i != al->count; ++i)
 	{
-		if(compare(al->ptr[i], candidate) < 0)
-			candidate = al->ptr[i];
+		if(compare(al->pArray[i], candidate) < 0)
+			candidate = al->pArray[i];
 	}
 	return candidate;
 }
@@ -232,28 +230,25 @@ void* maxAL(ArrayList* al, Compare compare)
 	void* candidate;
 	if(al->count == 0)
 		return NULL;
-	candidate = al->ptr[0];
+	candidate = al->pArray[0];
 	for(int i = 1; i != al->count; ++i)
 	{
-		if(compare(al->ptr[i], candidate) > 0)
-			candidate = al->ptr[i];
+		if(compare(al->pArray[i], candidate) > 0)
+			candidate = al->pArray[i];
 	}
 	return candidate;
 }
 
-
-boolean setCapacity(ArrayList* al, const size_t newCapacity)
+boolean setCapacity(ArrayList* al, int newCapacity)
 {
-	if (newCapacity <= 0 || newCapacity < al->count)
-		return EXIT_FAILURE;
 	void* temp;
-	temp = al->ptr;
+	temp = al->pArray;
 	al->capacity = newCapacity;
-	al->ptr = realloc(al->ptr, newCapacity * sizeof(void*));
-	if (al->ptr == NULL)
+	al->pArray = realloc(al->pArray, newCapacity * sizeof(void*));
+	if (al->pArray == NULL)
 	{
-		al->ptr = temp;
-		return EXIT_FAILURE;
+		al->pArray = temp;
+		return true;
 	}
-	return EXIT_SUCCESS;
+	return false;
 }
