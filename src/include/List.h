@@ -28,16 +28,26 @@
 #include "ArrayList.h"
 #include "foreach.h"
 #include "addDTP.h"
+#include "isRange.h"
 #include "Queue.h"
 #include "Stack.h"
-#include "isRange.h"
-
-extern LinkedList registers[MAX_LISTS];
  
+#define push(expr, obj) \
+	_Generic((expr), \
+		Stack*  : addFirstST, \
+		LinkedList* : addFirstLK \
+	)(expr, addDTP(obj))
+
+#define enqueue(expr, obj) \
+	_Generic((expr), \
+		Queue*  : addLastQE, \
+		LinkedList* : addLastLK \
+	)(expr, addDTP(obj))
+
 #define add(expr, obj) \
 	_Generic((expr), \
-		ArrayList*  : addAL, \
-		LinkedList* : addLK \
+		ArrayList*  : addLastAL, \
+		LinkedList* : addLastLK \
 	)(expr, addDTP(obj))
 
 #define add_i(expr, index, obj) \
@@ -58,6 +68,18 @@ extern LinkedList registers[MAX_LISTS];
 		LinkedList* : setLK \
 	)(expr, index, addDTP(newObject))
 
+#define dequeue(expr) \
+	_Generic((expr), \
+		Queue*  : removeFirstQE, \
+		LinkedList* : removeFirstLK \
+	)(expr)
+	
+#define pop(expr) \
+	_Generic((expr), \
+		Stack*  : removeFirstST, \
+		LinkedList* : removeFirstLK \
+	)(expr)
+	
 #define oremove(expr, key, equals) \
 	_Generic((expr), \
 		ArrayList*  : removeAL, \
@@ -78,30 +100,35 @@ extern LinkedList registers[MAX_LISTS];
 	
 #define clear(expr) \
 	_Generic((expr), \
-		ArrayList*  : clearAL, \
-		LinkedList* : clearLK, \
-		Stack* : clear_stack \
-	)(expr)
+		ArrayList*  : clearAL((ArrayList*)expr), \
+		LinkedList* : clearLK((LinkedList*)expr),  \
+		Stack* : 	clearLK((LinkedList*)expr),  \
+		Queue* : 	clearLK((LinkedList*)expr)  \
+	)
 	
 #define find(expr, key, equals) \
 	_Generic((expr), \
-		ArrayList*  : findAL, \
-		LinkedList* : findLK \
-	)(expr, key, equals)
+		ArrayList*  : findAL((ArrayList*)expr, key, equals), \
+		LinkedList* : findLK((LinkedList*)expr, key, equals), \
+		Stack* : findLK((LinkedList*)expr, key, equals), \
+		Queue* : findLK((LinkedList*)expr, key, equals)  \
+	)
 	
 #define size(expr) \
 	_Generic((expr), \
-		ArrayList*  : sizeAL, \
-		LinkedList* : sizeLK, \
-		Stack* : size_stack \
-	)(expr)
+		ArrayList*  : sizeAL((ArrayList*)expr), \
+		LinkedList* : sizeLK((LinkedList*)expr),  \
+		Stack* : sizeLK((LinkedList*)expr), \
+		Queue* : sizeLK((LinkedList*)expr)  \
+	)
 
 #define isEmpty(expr) \
 	_Generic((expr), \
-		ArrayList*  : isEmptyAL, \
-		LinkedList* : isEmptyLK, \
-		Stack* : isEmpty_stack \
-	)(expr)
+		ArrayList*  : isEmptyAL((ArrayList*)expr), \
+		LinkedList* : isEmptyLK((LinkedList*)expr),  \
+		Stack* : isEmptyLK((LinkedList*)expr), \
+		Queue* : isEmptyLK((LinkedList*)expr)  \
+	)
 
 #define bsort(expr, compare) \
 	_Generic((expr), \
@@ -124,8 +151,21 @@ extern LinkedList registers[MAX_LISTS];
 #define delete(expr) \
 	_Generic((expr), \
 		ArrayList*  : deleteAL(expr), \
-		LinkedList* : deleteLK(expr), \
-		Stack* : delete_stack(expr) \
+		LinkedList* : deleteLK(expr),  \
+		Stack* : deleteLK(expr),  \
+		Queue* : deleteLK(expr)  \
+	)
+
+#define getTop(expr) \
+	_Generic((expr), \
+		Stack*  : getTopST((Stack*)expr), \
+		LinkedList* : getTopST((Stack*)expr)  \
+	)
+
+#define getFront(expr) \
+	_Generic((expr), \
+		Queue*  : getFrontQE((Queue*)expr), \
+		LinkedList* : getFrontQE((Queue*)expr)  \
 	)
 
 #endif /* _LIST_H */
