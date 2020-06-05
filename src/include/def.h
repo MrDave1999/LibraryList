@@ -25,14 +25,16 @@
 
 #include <stddef.h>
 
-#define MAX_LISTS	(2)
+#define MAX_LISTS	(4)
 #define true 1
 #define false 0
 
 enum ListType
 {
 	LINKEDLIST,
-	ARRAYLIST
+	ARRAYLIST,
+	ARRAYQUEUE,
+	ARRAYSTACK
 };
 
 typedef enum ListType ListType;
