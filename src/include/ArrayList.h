@@ -40,6 +40,7 @@ typedef struct ArrayList ArrayList;
 #define newArrayList() new_object_list(ARRAYLIST, sizeof(ArrayList))
 #define deleteAL(objectAL) delete_object_list(ARRAYLIST, objectAL, (void(*)(void*))clearAL)
 
+void swap(void**, void**);
 boolean addLastAL(ArrayList*, void*);
 boolean addAL_Index(ArrayList*, const int, void*);			
 void* getAL(ArrayList*, const int);
@@ -54,6 +55,7 @@ boolean isEmptyAL(ArrayList*);
 void* bSearch(ArrayList*, const void*, Compare);
 int bSearch_i(ArrayList*, const void*, Compare);
 boolean bsortAL(ArrayList*, Compare);
+boolean quicksort(ArrayList*, Compare);
 void* minAL(ArrayList*, Compare);
 void* maxAL(ArrayList*, Compare);
 boolean setCapacity(ArrayList*, const int);
