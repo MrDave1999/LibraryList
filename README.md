@@ -2,7 +2,7 @@
 [![LibraryList](https://img.shields.io/badge/C-ListGeneric-blue)](https://github.com/MrDave1999/LibraryList)
 [![LibraryList](https://img.shields.io/badge/LibraryList-v3.5-blue)](https://github.com/MrDave1999/LibraryList)
 
-LibraryList es una biblioteca que permite usar diversas estructuras de datos de forma genérica, esto quiere decir que en un programa se puede tener una lista de objetos de tipo `Vehículo` y en otra objetos de tipo `Conductor`.
+LibraryList es una biblioteca que permite usar diversas estructuras de datos de forma genérica, esto quiere decir que en un programa se puede tener una lista de objetos de tipo `Vehículo` y en otra objetos de tipo `Conductor`. Sin embargo, cada elemento de la lista deben ser del mismo tipo.
 
 Las estructuras o tipos que maneja la biblioteca son:
 
