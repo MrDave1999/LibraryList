@@ -24,6 +24,13 @@
 #include "lst/ArrayList.h"
 #include "lst/isRange.h"
 
+void swap(void** p1, void** p2)
+{
+	void* aux = *p1;
+	*p1 = *p2;
+	*p2 = aux;
+}
+
 boolean addLastAL(ArrayList* al, void* object)
 {
 	if (al == NULL || object == NULL)
@@ -187,7 +194,6 @@ int bSearch_i(ArrayList* al, const void* key, Compare compare)
 
 boolean bsortAL(ArrayList* al, Compare compare)
 {
-	void* aux;
 	size_t len = al->count;
 	if(len == 0)
 		return true;
@@ -197,10 +203,8 @@ boolean bsortAL(ArrayList* al, Compare compare)
 		for(int i = 1; i != len; ++i)
 		{
 			if(compare(al->pArray[i - 1], al->pArray[i]) > 0)
-			{			
-				aux = al->pArray[i];
-				al->pArray[i] = al->pArray[i - 1];
-				al->pArray[i - 1] = aux;
+			{		
+				swap(&al->pArray[i], &al->pArray[i - 1]);
 				change = true;
 			}	
 		}
@@ -208,6 +212,11 @@ boolean bsortAL(ArrayList* al, Compare compare)
 		--len;
 		change = false;
 	}
+	return false;
+}
+
+boolean quicksort(ArrayList* al, Compare compare)
+{
 	return false;
 }
 
