@@ -21,10 +21,10 @@
 */
 
 #include "lst/LinkedList.h"
-#include "lst/Queue.h"
+#include "lst/LinkedQueue.h"
 #include <stdlib.h>
 
-boolean addLastQE(Queue* qe, void* object)
+boolean addLastLQ(LinkedQueue* qe, void* object)
 {
 	ListNode* newNode = createNode(qe, object, sizeof(ListNode));
 	if(newNode == NULL)
@@ -37,7 +37,7 @@ boolean addLastQE(Queue* qe, void* object)
 	return false;
 }
 
-void* removeFirstQE(Queue* qe)
+void* removeFirstLQ(LinkedQueue* qe)
 {
 	ListNode* aux;
 	void* ob;
@@ -51,7 +51,7 @@ void* removeFirstQE(Queue* qe)
 	return ob;
 }
 
-void* getFrontQE(Queue* qe)
+void* getFrontLQ(LinkedQueue* qe)
 {
 	return qe->pBegin->object;
 }
