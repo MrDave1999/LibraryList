@@ -22,6 +22,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "lst/ArrayList.h"
 #include "lst/LinkedList.h"
 #include "lst/isRange.h"
 
@@ -257,7 +258,6 @@ boolean isEmptyLK(LinkedList* lk)
 boolean bsortLK(LinkedList* lk, Compare compare)
 {
 	Node* aux;
-	void* p;
 	Node* pEnd = lk->pEnd;
 	boolean change = false;
 	if(lk->count == 0)
@@ -269,9 +269,7 @@ boolean bsortLK(LinkedList* lk, Compare compare)
 		{
 			if(compare(aux->object, aux->next->object) > 0)
 			{			
-				p = aux->next->object;
-				aux->next->object = aux->object;
-				aux->object = p;
+				swap(&aux->next->object, &aux->object);
 				change = true;
 			}	
 			aux = aux->next;
@@ -280,6 +278,11 @@ boolean bsortLK(LinkedList* lk, Compare compare)
 		pEnd = pEnd->prev;
 		change = false;
 	}
+	return false;
+}
+
+boolean mergesort(LinkedList* lk, Compare compare)
+{
 	return false;
 }
 
