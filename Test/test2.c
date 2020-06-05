@@ -10,7 +10,7 @@ boolean nameEquals(const void* p, const void* key)
 
 int main()
 {
-	Stack* listNames = newStack();
+	LinkedStack* listNames = newLinkedStack();
 	push(listNames, "David");
 	push(listNames, "Roberto");
 	push(listNames, "Joel");
@@ -22,7 +22,7 @@ int main()
 	char* name = pop(listNames);
 	printf("One name in list: %s\n", name);
 	free(name);
-	 
+	
 	printf("(2) isEmpty: %d, size: %d\n\n", isEmpty(listNames), size(listNames));
 	foreach(char, name, listNames)
 		printf("%s\n", name);
