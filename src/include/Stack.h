@@ -20,24 +20,23 @@
 	SOFTWARE.
 */
 
-#ifndef _STACK_H
-#define _STACK_H
+#ifndef _LINKEDSTACK_H
+#define _LINKEDSTACK_H
 
-#include "Queue.h"
+#include "LinkedQueue.h"
 
-struct Stack
+struct LinkedStack
 {
-	int i;
 	int count;
-	struct ListNode* pBegin;
+	struct ListNode* pTop;
 	struct ListNode* aux;
 };
 
-typedef struct Stack Stack;
-#define newStack() new_object_list(LINKEDLIST, sizeof(Stack))
+typedef struct LinkedStack LinkedStack;
+#define newLinkedStack() new_object_list(LINKEDLIST, sizeof(LinkedStack))
 
-boolean addFirstST(Stack*, void*);
-void* removeFirstST(Stack*);
-void* getTopST(Stack*);
+boolean addFirstLS(LinkedStack*, void*);
+void* removeFirstLS(LinkedStack*);
+void* getTopLS(LinkedStack*);
 
-#endif /* _STACK_H */
+#endif /* _LINKEDSTACK_H */
