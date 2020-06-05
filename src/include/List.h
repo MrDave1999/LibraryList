@@ -25,23 +25,27 @@
 
 #include "MemoryManagement.h"
 #include "LinkedList.h"
+#include "LinkedQueue.h"
+#include "LinkedStack.h"
 #include "ArrayList.h"
+#include "ArrayStack.h"
+#include "ArrayQueue.h"
 #include "foreach.h"
 #include "addDTP.h"
 #include "isRange.h"
-#include "Queue.h"
-#include "Stack.h"
  
 #define push(expr, obj) \
 	_Generic((expr), \
-		Stack*  : addFirstST, \
+		LinkedStack*  : addFirstLS, \
+		ArrayStack*  : addFirstAS, \
 		LinkedList* : addFirstLK \
 	)(expr, addDTP(obj))
 
 #define enqueue(expr, obj) \
 	_Generic((expr), \
-		Queue*  : addLastQE, \
-		LinkedList* : addLastLK \
+		LinkedQueue*  : addLastLQ, \
+		LinkedList* : addLastLK, \
+		ArrayQueue* : addLastAQ \
 	)(expr, addDTP(obj))
 
 #define add(expr, obj) \
@@ -70,13 +74,15 @@
 
 #define dequeue(expr) \
 	_Generic((expr), \
-		Queue*  : removeFirstQE, \
-		LinkedList* : removeFirstLK \
+		LinkedQueue*  : removeFirstLQ, \
+		LinkedList* : removeFirstLK, \
+		ArrayQueue* : removeFirstAQ \
 	)(expr)
 	
 #define pop(expr) \
 	_Generic((expr), \
-		Stack*  : removeFirstST, \
+		LinkedStack*  : removeFirstLS, \
+		ArrayStack*  : removeFirstAS, \
 		LinkedList* : removeFirstLK \
 	)(expr)
 	
@@ -102,38 +108,52 @@
 	_Generic((expr), \
 		ArrayList*  : clearAL((ArrayList*)expr), \
 		LinkedList* : clearLK((LinkedList*)expr),  \
-		Stack* : 	clearLK((LinkedList*)expr),  \
-		Queue* : 	clearLK((LinkedList*)expr)  \
+		LinkedStack* : 	clearLK((LinkedList*)expr),  \
+		ArrayStack* : 	clearAS((ArrayStack*)expr),  \
+		LinkedQueue* : 	clearLK((LinkedList*)expr),  \
+		ArrayQueue* : 	clearAQ((ArrayQueue*)expr)  \
 	)
 	
 #define find(expr, key, equals) \
 	_Generic((expr), \
 		ArrayList*  : findAL((ArrayList*)expr, key, equals), \
 		LinkedList* : findLK((LinkedList*)expr, key, equals), \
-		Stack* : findLK((LinkedList*)expr, key, equals), \
-		Queue* : findLK((LinkedList*)expr, key, equals)  \
+		LinkedStack* : findLK((LinkedList*)expr, key, equals), \
+		ArrayStack* : findAS((ArrayStack*)expr, key, equals), \
+		LinkedQueue* : findLK((LinkedList*)expr, key, equals),  \
+		ArrayQueue* : findAQ((ArrayQueue*)expr, key, equals)  \
 	)
 	
 #define size(expr) \
 	_Generic((expr), \
 		ArrayList*  : sizeAL((ArrayList*)expr), \
 		LinkedList* : sizeLK((LinkedList*)expr),  \
-		Stack* : sizeLK((LinkedList*)expr), \
-		Queue* : sizeLK((LinkedList*)expr)  \
+		LinkedStack* : sizeLK((LinkedList*)expr), \
+		ArrayStack* : sizeAS((ArrayStack*)expr), \
+		LinkedQueue* : sizeLK((LinkedList*)expr),  \
+		ArrayQueue* : sizeAQ((ArrayQueue*)expr)  \
 	)
 
 #define isEmpty(expr) \
 	_Generic((expr), \
 		ArrayList*  : isEmptyAL((ArrayList*)expr), \
 		LinkedList* : isEmptyLK((LinkedList*)expr),  \
-		Stack* : isEmptyLK((LinkedList*)expr), \
-		Queue* : isEmptyLK((LinkedList*)expr)  \
+		LinkedStack* : isEmptyLK((LinkedList*)expr), \
+		ArrayStack* : isEmptyAS((ArrayStack*)expr), \
+		LinkedQueue* : isEmptyLK((LinkedList*)expr),  \
+		ArrayQueue* : isEmptyAQ((ArrayQueue*)expr)  \
 	)
 
 #define bsort(expr, compare) \
 	_Generic((expr), \
 		ArrayList*  : bsortAL, \
 		LinkedList* : bsortLK \
+	)(expr, compare)
+	
+#define sort(expr, compare) \
+	_Generic((expr), \
+		ArrayList*  : quicksort, \
+		LinkedList* : mergesort \
 	)(expr, compare)
 	
 #define min(expr, compare) \
@@ -152,20 +172,30 @@
 	_Generic((expr), \
 		ArrayList*  : deleteAL(expr), \
 		LinkedList* : deleteLK(expr),  \
-		Stack* : deleteLK(expr),  \
-		Queue* : deleteLK(expr)  \
+		LinkedStack* : deleteLK(expr),  \
+		ArrayStack* : deleteAS(expr),  \
+		LinkedQueue* : deleteLK(expr),  \
+		ArrayQueue* : deleteAQ(expr)  \
 	)
 
 #define getTop(expr) \
 	_Generic((expr), \
-		Stack*  : getTopST((Stack*)expr), \
-		LinkedList* : getTopST((Stack*)expr)  \
+		LinkedStack*  : getTopLS((LinkedStack*)expr), \
+		ArrayStack*  : getTopAS((ArrayStack*)expr), \
+		LinkedList* : getTopLS((LinkedStack*)expr)  \
 	)
 
 #define getFront(expr) \
 	_Generic((expr), \
-		Queue*  : getFrontQE((Queue*)expr), \
-		LinkedList* : getFrontQE((Queue*)expr)  \
+		LinkedQueue*  : getFrontLQ((LinkedQueue*)expr), \
+		LinkedList* : getFrontLQ((LinkedQueue*)expr),  \
+		ArrayQueue* : getFrontAQ((ArrayQueue*)expr)  \
 	)
+	
+#define full(expr) \
+	_Generic((expr), \
+		ArrayQueue* : fullAQ, \
+		ArrayStack* : fullAS \
+	)(expr)
 
 #endif /* _LIST_H */
