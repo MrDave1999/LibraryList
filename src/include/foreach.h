@@ -23,19 +23,50 @@
 #ifndef _FOREACH_H
 #define _FOREACH_H
 
-void* getNextElementAL(ArrayList*);
-void* getNextElementLK(LinkedList*);
+#define getDefault(expr) \
+	_Generic((expr), \
+		ArrayList*  : getElementDefaultAL((ArrayList*)expr), \
+		LinkedList* : getElementDefaultLK((LinkedList*)expr), \
+		LinkedStack* : getElementDefaultLK((LinkedList*)expr), \
+		LinkedQueue* : getElementDefaultLK((LinkedList*)expr),  \
+		ArrayQueue* : getElementDefaultAQ((ArrayQueue*)expr),    \
+		ArrayStack* : getElementDefaultAS((ArrayStack*)expr)    \
+	)
 
-#define getNextElement(expr) \
+#define hasNext(expr) \
+	_Generic((expr), \
+		ArrayList*  : hasNextAL((ArrayList*)expr), \
+		LinkedList* : hasNextLK((LinkedList*)expr), \
+		LinkedStack* : hasNextLK((LinkedList*)expr), \
+		LinkedQueue* : hasNextLK((LinkedList*)expr),  \
+		ArrayQueue* : hasNextAQ((ArrayQueue*)expr),  \
+		ArrayStack* : hasNextAS((ArrayStack*)expr)  \
+	)
+
+#define getNext(expr) \
 	_Generic((expr), \
 		ArrayList*  : getNextElementAL((ArrayList*)expr), \
 		LinkedList* : getNextElementLK((LinkedList*)expr), \
-		Stack* : getNextElementLK((LinkedList*)expr), \
-		Queue* : getNextElementLK((LinkedList*)expr)  \
+		LinkedStack* : getNextElementLK((LinkedList*)expr), \
+		LinkedQueue* : getNextElementLK((LinkedList*)expr),  \
+		ArrayQueue* : getNextElementAQ((ArrayQueue*)expr),  \
+		ArrayStack* : getNextElementAS((ArrayStack*)expr)  \
 	)
 	
-#define foreach(type, nameVar, _ptr) \
-	_ptr->i = 0; \
-	for(type* nameVar; _ptr->i != _ptr->count && (nameVar = getNextElement(_ptr)) != NULL; ++_ptr->i)
+#define foreach(typeData, name, nameList) \
+	for(typeData* name = getDefault(nameList); hasNext(nameList); name = getNext(nameList))
 
+void* getElementDefaultAL(ArrayList*);
+void* getElementDefaultLK(LinkedList*);
+void* getElementDefaultAQ(ArrayQueue*);
+void* getElementDefaultAS(ArrayStack*);
+boolean hasNextAL(ArrayList*);
+boolean hasNextLK(LinkedList*);
+boolean hasNextAQ(ArrayQueue*);
+boolean hasNextAS(ArrayStack*);
+void* getNextElementAL(ArrayList*);
+void* getNextElementLK(LinkedList*);	
+void* getNextElementAQ(ArrayQueue*);
+void* getNextElementAS(ArrayStack*);	
+	
 #endif /* _FOREACH_H */
