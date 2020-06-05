@@ -20,19 +20,72 @@
 	SOFTWARE.
 */
 
-#include "lst/List.h"
+#include "lst/LinkedList.h"
+#include "lst/ArrayList.h"
+#include "lst/ArrayQueue.h"
+#include "lst/ArrayStack.h"
+
+void* getElementDefaultAL(ArrayList* al)
+{
+	al->i = 0;
+	return (al->count == 0) ? (NULL) : (al->pArray[al->i]);
+}
+
+void* getElementDefaultLK(LinkedList* lk)
+{
+	lk->aux = lk->pBegin;
+	return (lk->count == 0) ? (NULL) : (lk->aux->object);
+}
+
+void* getElementDefaultAQ(ArrayQueue* qe)
+{
+	qe->i = qe->begin;
+	return qe->pArray[qe->i];
+}
+
+void* getElementDefaultAS(ArrayStack* as)
+{
+	as->i = as->top;
+	return as->pArray[as->i];
+}
+
+boolean hasNextAL(ArrayList* al)
+{
+	return al->i < al->count;
+}
+
+boolean hasNextLK(LinkedList* lk)
+{
+	return lk->aux != NULL;
+}
+
+boolean hasNextAQ(ArrayQueue* qe)
+{
+	return qe->i < qe->n;
+}
+
+boolean hasNextAS(ArrayStack* as)
+{
+	return as->i < as->max;
+}
 
 void* getNextElementAL(ArrayList* al)
 {
-	return al->pArray[al->i];
+	return (++al->i < al->count) ? (al->pArray[al->i]) : (NULL);
 }
 
 void* getNextElementLK(LinkedList* lk)
 {
-	void* ob = NULL;
-	if(lk->i == 0)
-		lk->aux = lk->pBegin;
-	ob = lk->aux->object;
 	lk->aux = lk->aux->next;
-	return ob;
+	return (lk->aux != NULL) ? (lk->aux->object) : (NULL);
+}
+
+void* getNextElementAQ(ArrayQueue* qe)
+{
+	return (++qe->i < qe->n) ? (qe->pArray[qe->i % qe->max]) : (NULL);
+}
+
+void* getNextElementAS(ArrayStack* as)
+{
+	return (++as->i < as->max) ? (as->pArray[as->i]) : (NULL);
 }
