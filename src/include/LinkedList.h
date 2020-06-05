@@ -34,7 +34,6 @@ struct Node
 
 struct LinkedList
 {
-	int i;
 	int count;
 	struct Node* pBegin;
 	struct Node* aux;
@@ -64,6 +63,7 @@ void* findLK(LinkedList*, const void*, Equals);
 int sizeLK(LinkedList*);
 boolean isEmptyLK(LinkedList*);
 boolean bsortLK(LinkedList*, Compare);
+boolean mergesort(LinkedList*, Compare);
 void* minLK(LinkedList*, Compare);
 void* maxLK(LinkedList*, Compare);
 
