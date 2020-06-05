@@ -24,19 +24,36 @@
 #include "lst/MemoryManagement.h"
 #include "lst/ArrayList.h"
 #include "lst/LinkedList.h"
+#include "lst/ArrayQueue.h"
+#include "lst/ArrayStack.h"
 
 LinkedList registers[MAX_LISTS];
+boolean act = true;
+
+void free_queue_stack(const ListType lt, void* objectList)
+{
+	if(lt == ARRAYQUEUE)
+		free(((ArrayQueue*)objectList)->pArray);
+	else if(lt == ARRAYSTACK)
+		free(((ArrayStack*)objectList)->pArray);
+}
+
+void setContainer(boolean value)
+{
+	act = (value == 0 || value == 1) ? (value) : (true);
+}
 
 void* new_object_list(const ListType lt, size_t size)
 {
 	void* ptr = calloc(1, size);
-	return (ptr == NULL || addLastLK(&registers[lt], ptr)) ? NULL : ptr;
+	return (ptr == NULL || ADD_CONTAINER(&registers[lt], ptr)) ? NULL : ptr;
 }
 
 void delete_object_list(const ListType lt, void* objectList, Clear clear)
 {
 	clear(objectList);
-	removeLK(&registers[lt], objectList, pointerEquals);
+	free_queue_stack(lt, objectList);
+	act ? removeLK(&registers[lt], objectList, pointerEquals) : free(objectList);
 }
 
 boolean pointerEquals(const void* object, const void* key)
@@ -48,6 +65,7 @@ void freeALL()
 {
 	freeALLEx(LINKEDLIST, (void(*)(void*))clearLK);
 	freeALLEx(ARRAYLIST, (void(*)(void*))clearAL);
+	freeALLEx(ARRAYQUEUE, (void(*)(void*))clearAQ);
 }
 
 void freeALLEx(const ListType lt, Clear clear)
@@ -56,6 +74,7 @@ void freeALLEx(const ListType lt, Clear clear)
 	{
 		registers[lt].aux = registers[lt].pBegin;
 		clear(registers[lt].pBegin->object);
+		free_queue_stack(lt, registers[lt].pBegin->object);
 		free(registers[lt].pBegin->object);
 		registers[lt].pBegin = registers[lt].pBegin->next;
 		free(registers[lt].aux);
