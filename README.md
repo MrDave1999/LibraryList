@@ -1,13 +1,23 @@
 # LibraryList Generic
 [![LibraryList](https://img.shields.io/badge/C-ListGeneric-blue)](https://github.com/MrDave1999/LibraryList)
-[![LibraryList](https://img.shields.io/badge/LibraryList-v3.0-blue)](https://github.com/MrDave1999/LibraryList)
+[![LibraryList](https://img.shields.io/badge/LibraryList-v3.5-blue)](https://github.com/MrDave1999/LibraryList)
 
 LibraryList es una biblioteca que permite usar diversas estructuras de datos de forma genérica, esto quiere decir que en un programa se puede tener una lista de objetos de tipo `Vehículo` y en otra objetos de tipo `Conductor`.
 
-Hasta ahora las estructuras de datos que maneja la biblioteca son:
+Las estructuras o tipos que maneja la biblioteca son:
 
-- LinkedList.
-- ArrayList.
+- LinkedList
+  - *Implementación:* Lista doblemente enlazada.
+- LinkedQueue
+  - *Implementación:* Lista enlazada simple.
+- LinkedStack
+  - *Implementación:* Lista enlazada simple.
+- ArrayList
+  - *Implementación:* Arrays.
+- ArrayQueue
+  - *Implementación:* Arrays circular.
+- ArrayStack
+  - *Implementación:* Arrays.
 
 ### Requisitos
 
@@ -21,7 +31,7 @@ Necesitas descargar:
 
 - Un compilador de C, como por ejemplo [GCC](https://jmeubank.github.io/tdm-gcc/download/).
 
-- El archivo `LibraryList_v3.0` (lo encuentras en este enlace: https://github.com/MrDave1999/LibraryList/releases/tag/v3.0).
+- El archivo `LibraryList_v3.0` (lo encuentras en este enlace: https://github.com/MrDave1999/LibraryList/releases/tag/v3.5).
 
 Después de haber descargado las herramientas, agregaremos la carpeta `lst` en el directorio `include`, que venga por defecto cuando instalemos el compilador. El archivo `liblist.a` debe estar añadido en la carpeta `lib`.
 
@@ -55,10 +65,10 @@ int main(void)
 	printf("Elementos: %d\n", size(listaPersonas));
 	
 	/* Añadimos elementos a la lista */
-	add(listaPersonas, "Pepito");
-	add(listaPersonas, "David");
-	add(listaPersonas, "Jose");
-	add(listaPersonas, "Lukas");
+	add(listaPersonas, "Roberto Placencio");
+	add(listaPersonas, "Guillermo Rivera");
+	add(listaPersonas, "Joel Delgado");
+	add(listaPersonas, "Johan Sanchez");
 	
 	/* Imprimimos los elementos de la lista */
 	foreach(char, nombre, listaPersonas)
@@ -99,6 +109,35 @@ int main(void)
 	/* Liberamos los elementos de la lista y 
 		también el objeto al que apuntaba listNums 
 	*/
+	delete(listNums);
+	return 0;
+}
+```
+
+**3.- Ejemplo:** Mostramos en pantalla solo los números pares.
+```c
+/* En este ejemplo la macro "enqueue" añadimos elementos a una lista enlazada simple. */
+
+#include <stdio.h>
+#include <lst/List.h>
+
+int main(void)
+{
+	int nums[] = {1, 2, 3, 4, 5, 6, 7};
+	/* Creamos la cola vacía */
+	LinkedQueue* listaNums = newLinkedQueue();
+	
+	for(int i = 0; i != 7; ++i)
+	{
+		/* Encolamos los elementos pero solo los pares */
+		if(i % 2 == 0)
+			enqueue(listaNums, nums[i]);
+	}
+	
+	/* Imprimimos los elementos pares */
+	foreach(int, num, listaNums)
+		printf("%d\n", *num);
+	
 	delete(listNums);
 	return 0;
 }
