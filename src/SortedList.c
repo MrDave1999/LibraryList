@@ -24,13 +24,13 @@
 #include "lst/MemoryManagement.h"
 #include <stdlib.h>
 
-void* newSL(size_t size, Compare compare)
+LinkedList* newSL(size_t size, Compare compare)
 {
 	SortedList* sl = calloc(1, size);
-	if(sl == NULL || addLastLK(&registers[LINKEDLIST], sl))
+	if(sl == NULL || ADD_CONTAINER(&registers[LINKEDLIST], sl))
 		return NULL;
 	sl->compare = compare;
-	return sl;
+	return (LinkedList*)sl;
 }
 
 boolean insertOrder(LinkedList* lk, void* object)
