@@ -34,7 +34,7 @@ struct SortedList
 
 typedef struct SortedList SortedList;
 
-void* newSL(size_t, Compare);
+LinkedList* newSL(size_t, Compare);
 boolean insertOrder(LinkedList*, void*);
 void* findSorted(LinkedList*, const void*, const void*, Equals);
 void searchPosition_Node(LinkedList*, const void*, Node*);
