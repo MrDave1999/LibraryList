@@ -20,8 +20,8 @@
 	SOFTWARE.
 */
 
-#ifndef _QUEUE_H
-#define _QUEUE_H
+#ifndef _LINKEDQUEUE_H
+#define _LINKEDQUEUE_H
 
 struct ListNode
 {
@@ -29,21 +29,20 @@ struct ListNode
 	struct ListNode* next;
 };
 
-struct Queue
+struct LinkedQueue
 {
-	int i;
 	int count;
 	struct ListNode* pBegin;
 	struct ListNode* aux;
 	struct ListNode* pEnd;
 };
 
-typedef struct Queue Queue;
+typedef struct LinkedQueue LinkedQueue;
 typedef struct ListNode ListNode;
-#define newQueue() new_object_list(LINKEDLIST, sizeof(Queue))
+#define newLinkedQueue() new_object_list(LINKEDLIST, sizeof(LinkedQueue))
 
-boolean addLastQE(Queue*, void*);
-void* removeFirstQE(Queue*);
-void* getFrontQE(Queue*);
+boolean addLastLQ(LinkedQueue*, void*);
+void* removeFirstLQ(LinkedQueue*);
+void* getFrontLQ(LinkedQueue*);
 
-#endif /* _QUEUE_H */
+#endif /* _LINKEDQUEUE_H */
