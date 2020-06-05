@@ -116,7 +116,7 @@ int main(void)
 
 **3.- Ejemplo:** Mostramos en pantalla solo los números pares.
 ```c
-/* En este ejemplo la macro "enqueue" añadimos elementos a una lista enlazada simple. */
+/* En este ejemplo la macro "enqueue" añade elementos a una lista enlazada simple. */
 
 #include <stdio.h>
 #include <lst/List.h>
