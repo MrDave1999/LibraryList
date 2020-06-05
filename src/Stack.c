@@ -21,27 +21,27 @@
 */
 
 #include "lst/LinkedList.h"
-#include "lst/Queue.h"
-#include "lst/Stack.h"
+#include "lst/LinkedQueue.h"
+#include "lst/LinkedStack.h"
 
-boolean addFirstST(Stack* st, void* object)
+boolean addFirstLS(LinkedStack* st, void* object)
 {
 	ListNode* newNode = createNode(st, object, sizeof(ListNode));
 	if(newNode == NULL)
 		return true;
 	newNode->object = object;
 	++st->count;
-	newNode->next = st->pBegin;
-	st->pBegin = newNode;
+	newNode->next = st->pTop;
+	st->pTop = newNode;
 	return false;
 }
 
-void* removeFirstST(Stack* st)
+void* removeFirstLS(LinkedStack* st)
 {
-	return removeFirstQE((Queue*)st);
+	return removeFirstLQ((LinkedQueue*)st);
 }
 
-void* getTopST(Stack* st)
+void* getTopLS(LinkedStack* st)
 {
-	return st->pBegin->object;
+	return st->pTop->object;
 }
