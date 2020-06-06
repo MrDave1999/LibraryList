@@ -12,7 +12,7 @@ boolean numberEquals(const void* o1, const void* o2)
 {
 	return *(int*)o1 == *(int*)o2;
 }
-
+ 
 int main()
 { 
 	ArrayList* list = newArrayList();
