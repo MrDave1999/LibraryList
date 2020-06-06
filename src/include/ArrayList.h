@@ -28,8 +28,8 @@
 struct ArrayList
 {
 	void** pArray;
-	int capacity;
 	int i;
+	int capacity;
 	int count;
 };
 
