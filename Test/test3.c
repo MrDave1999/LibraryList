@@ -30,8 +30,8 @@ int main()
 	printf("Get(1): %s, size: %d\n", (char*)get(list, 1), size(list));
 	free(prevName);
 	
-	oremove(list, "Roberto", nameEquals);
-	printf("oremove: %d\n", oremove(list, "Memo", nameEquals));
+	kremove(list, "Roberto", nameEquals);
+	printf("kremove: %d\n", kremove(list, "Memo", nameEquals));
 	
 	foreach(char, name, list)
 		printf("%s\n", name);
