@@ -2,7 +2,7 @@
 #include <stdlib.h> 
 #include <lst/List.h>
 #include <string.h>
-
+ 
 boolean nameEquals(const void* o1, const void* o2)
 {
 	return strcmp(o1, o2) == 0;
