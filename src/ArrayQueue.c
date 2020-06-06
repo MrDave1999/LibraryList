@@ -47,8 +47,11 @@ void* createArray(int max, size_t size, ListType lt)
 boolean addLastAQ(ArrayQueue* qe, void* object)
 {
 	int newPos;
-	if(qe->count == qe->max)
+	if(qe == NULL || object == NULL)
+	{
+		free(object);
 		return true;
+	}
 	newPos = (qe->begin + qe->count) % qe->max;
 	qe->pArray[newPos] = object;
 	++qe->count;
