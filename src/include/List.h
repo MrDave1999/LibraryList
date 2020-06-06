@@ -86,7 +86,7 @@
 		LinkedList* : removeFirstLK \
 	)(expr)
 	
-#define oremove(expr, key, equals) \
+#define kremove(expr, key, equals) \
 	_Generic((expr), \
 		ArrayList*  : removeAL, \
 		LinkedList* : removeLK \
