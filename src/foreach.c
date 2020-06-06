@@ -25,28 +25,24 @@
 #include "lst/ArrayQueue.h"
 #include "lst/ArrayStack.h"
 
-void* getElementDefaultAL(ArrayList* al)
+void setDefaultAL(ArrayList* al)
 {
 	al->i = 0;
-	return (al->count == 0) ? (NULL) : (al->pArray[al->i]);
 }
 
-void* getElementDefaultLK(LinkedList* lk)
+void setDefaultLK(LinkedList* lk)
 {
 	lk->aux = lk->pBegin;
-	return (lk->count == 0) ? (NULL) : (lk->aux->object);
 }
 
-void* getElementDefaultAQ(ArrayQueue* qe)
+void setDefaultAQ(ArrayQueue* qe)
 {
 	qe->i = qe->begin;
-	return qe->pArray[qe->i];
 }
 
-void* getElementDefaultAS(ArrayStack* as)
+void setDefaultAS(ArrayStack* as)
 {
 	as->i = as->top;
-	return as->pArray[as->i];
 }
 
 boolean hasNextAL(ArrayList* al)
@@ -69,23 +65,19 @@ boolean hasNextAS(ArrayStack* as)
 	return as->i < as->max;
 }
 
-void* getNextElementAL(ArrayList* al)
+void* getNextAL(ArrayList* al)
 {
-	return (++al->i < al->count) ? (al->pArray[al->i]) : (NULL);
+	return al->pArray[al->i++];
 }
 
-void* getNextElementLK(LinkedList* lk)
+void* getNextLK(LinkedList* lk)
 {
+	void* aux = lk->aux->object;
 	lk->aux = lk->aux->next;
-	return (lk->aux != NULL) ? (lk->aux->object) : (NULL);
+	return aux;
 }
 
-void* getNextElementAQ(ArrayQueue* qe)
+void* getNextAQ(ArrayQueue* qe)
 {
-	return (++qe->i < qe->n) ? (qe->pArray[qe->i % qe->max]) : (NULL);
-}
-
-void* getNextElementAS(ArrayStack* as)
-{
-	return (++as->i < as->max) ? (as->pArray[as->i]) : (NULL);
+	return qe->pArray[qe->i++ % qe->max];
 }
