@@ -26,8 +26,11 @@
 
 boolean addFirstAS(ArrayStack* as, void* object)
 {
-	if(as->count == as->max)
+	if(as == NULL || object == NULL)
+	{
+		free(object);
 		return true;
+	}
 	as->pArray[--as->top] = object;
 	++as->count;
 	return false;
