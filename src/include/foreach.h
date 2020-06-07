@@ -52,6 +52,12 @@
 		ArrayQueue* : getNextAQ((ArrayQueue*)expr),  \
 		ArrayStack* : getNextAL((ArrayList*)expr)  \
 	)
+
+#define remv(expr) \
+	_Generic((expr), \
+		ArrayList*: removeElement_AL, \
+		LinkedList*: removeElement_LK \
+	)(expr)
 	
 #define foreach(typeData, name, nameList) \
 	setDefault(nameList); \
@@ -67,6 +73,8 @@ boolean hasNextAQ(ArrayQueue*);
 boolean hasNextAS(ArrayStack*);
 void* getNextAL(ArrayList*);
 void* getNextLK(LinkedList*);	
-void* getNextAQ(ArrayQueue*);	
+void* getNextAQ(ArrayQueue*);
+void removeElement_AL(ArrayList*);
+void removeElement_LK(LinkedList*);	
 	
 #endif /* _FOREACH_H */
