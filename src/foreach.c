@@ -81,3 +81,16 @@ void* getNextAQ(ArrayQueue* qe)
 {
 	return qe->pArray[qe->i++ % qe->max];
 }
+
+void removeElement_AL(ArrayList* al)
+{
+	iremoveAL(al, --al->i);
+}
+
+void removeElement_LK(LinkedList* lk)
+{
+	lk->aux = (lk->pBegin->next == NULL) ? (lk->pBegin) : //Si solo hay un nodo en la lista..
+		(lk->aux == NULL) ? (lk->pEnd) //Si estamos en el último nodo..
+		: (lk->aux->prev); //De lo contrario, estamos en un nodo intermedio..
+	removeNode(lk);
+}
