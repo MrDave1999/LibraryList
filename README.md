@@ -43,6 +43,7 @@ Por último, se le debe avisar al enlazador el nombre de la biblioteca para que 
 ```c
 gcc prueba.c -llist
 ```
+**Nota:** Para obtener el proyecto completo, debes descargar el archivo [source.rar]( https://github.com/MrDave1999/LibraryList/releases/tag/v3.9).
 
 ### Documentación API
 
