@@ -139,15 +139,12 @@ boolean iremoveAL(ArrayList* al, const int index)
 
 void clearAL(ArrayList* al)
 {  
-	if (al->count != 0)
-	{
-		for (int i = 0; i != al->count; ++i)
-			free(al->pArray[i]);
-		free(al->pArray);
-		al->count = 0;
-		al->capacity = 0;
-		al->pArray = NULL;
-	}  
+	for (int i = 0; i != al->count; ++i)
+		free(al->pArray[i]);
+	free(al->pArray);
+	al->count = 0;
+	al->capacity = 0;
+	al->pArray = NULL;
 }
 
 void* findAL(ArrayList* al, const void* key, Equals equals)
