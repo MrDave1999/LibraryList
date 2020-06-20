@@ -192,7 +192,7 @@
 		ArrayQueue* : getFrontAQ((ArrayQueue*)expr)  \
 	)
 	
-#define full(expr) \
+#define isFull(expr) \
 	_Generic((expr), \
 		ArrayQueue* : fullAQ, \
 		ArrayStack* : fullAS \
