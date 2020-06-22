@@ -30,7 +30,9 @@
 #include "ArrayList.h"
 #include "ArrayStack.h"
 #include "ArrayQueue.h"
+#include "algorithm.h"
 #include "foreach.h"
+#include "Iterator.h"
 #include "addDTP.h"
 #include "isRange.h"
  
@@ -152,8 +154,7 @@
 	
 #define sort(expr, compare) \
 	_Generic((expr), \
-		ArrayList*  : quicksort, \
-		LinkedList* : mergesort \
+		ArrayList*  : invoke_quicksort \
 	)(expr, compare)
 	
 #define min(expr, compare) \
