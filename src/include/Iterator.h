@@ -20,8 +20,8 @@
 	SOFTWARE.
 */
 
-#ifndef _FOREACH_H
-#define _FOREACH_H
+#ifndef _ITERATOR_H
+#define _ITERATOR_H
 
 #define setDefault(expr) \
 	_Generic((expr), \
@@ -58,11 +58,7 @@
 		ArrayList*: removeElement_AL, \
 		LinkedList*: removeElement_LK \
 	)(expr)
-	
-#define foreach(typeData, name, nameList) \
-	setDefault(nameList); \
-	for(typeData* name = NULL; hasNext(nameList) && (name = getNext(nameList)); )
-
+		
 void setDefaultAL(ArrayList*);
 void setDefaultLK(LinkedList*);
 void setDefaultAQ(ArrayQueue*);
@@ -77,4 +73,4 @@ void* getNextAQ(ArrayQueue*);
 void removeElement_AL(ArrayList*);
 void removeElement_LK(LinkedList*);	
 	
-#endif /* _FOREACH_H */
+#endif /* _ITERATOR_H */
