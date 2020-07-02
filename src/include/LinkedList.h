@@ -40,7 +40,6 @@ struct LinkedList
 	struct Node* pEnd;
 };
 
-typedef struct ArrayList ArrayList;
 typedef struct LinkedList LinkedList;
 typedef struct Node Node;
 
