@@ -61,7 +61,7 @@
 		ArrayList*  : addAL_Index, \
 		LinkedList* : addLK_Index \
 	)(expr, index, addDTP(obj))
-	
+
 #define get(expr, index) \
 	_Generic((expr), \
 		ArrayList*  : getAL, \
@@ -154,7 +154,8 @@
 	
 #define sort(expr, compare) \
 	_Generic((expr), \
-		ArrayList*  : invoke_quicksort \
+		ArrayList*  : invoke_quicksort, \
+		LinkedList*  : invoke_mergesort \
 	)(expr, compare)
 	
 #define min(expr, compare) \
@@ -197,6 +198,12 @@
 	_Generic((expr), \
 		ArrayQueue* : fullAQ, \
 		ArrayStack* : fullAS \
+	)(expr)
+	
+#define reverse(expr) \
+	_Generic((expr), \
+		ArrayList* : reverseAL, \
+		LinkedList* : reverseLK \
 	)(expr)
 
 #endif /* _LIST_H */
