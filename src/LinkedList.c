@@ -253,37 +253,3 @@ boolean isEmptyLK(LinkedList* lk)
 {
 	return lk->pBegin == NULL;
 }
-
-void* minLK(LinkedList* lk, Compare compare)
-{
-	void* candidate;
-	Node* aux;
-	if(lk->count == 0)
-		return NULL;
-	candidate = lk->pBegin->object;
-	aux = lk->pBegin->next;
-	while(aux != NULL)
-	{
-		if(compare(aux->object, candidate) < 0)
-			candidate = aux->object;
-		aux = aux->next;
-	}
-	return candidate;
-}
-
-void* maxLK(LinkedList* lk, Compare compare)
-{
-	void* candidate;
-	Node* aux;
-	if(lk->count == 0)
-		return NULL;
-	candidate = lk->pBegin->object;
-	aux = lk->pBegin->next;
-	while(aux != NULL)
-	{
-		if(compare(aux->object, candidate) > 0)
-			candidate = aux->object;
-		aux = aux->next;
-	}
-	return candidate;
-}
