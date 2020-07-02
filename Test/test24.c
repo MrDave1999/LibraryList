@@ -32,7 +32,7 @@ int main(void)
 	}
 	printf("%d = %d\n", i, list->count);
 	getchar();
-	foreach(int, num, list)
+	foreach(int, num, list) 
 		printf("%d\n", *num);
 	printf("Ultimo elemento: %d\n", *(int*)list->pEnd->object);
 	printf("La lista quedo ordenada de forma ascendente:\n\n");
