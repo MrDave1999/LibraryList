@@ -26,6 +26,23 @@
 #include "LinkedList.h"
 #include "ArrayList.h"
 
+struct List
+{
+	Node* first;
+	Node* end;
+	int length;
+};
+
+typedef struct List List;
+
+/* Mueve un nodo hacia el último nodo de la lista combinada. */
+#define moveNode(last, first) \
+	first->prev = lastNode; \
+	*last = first; \
+	lastNode = first; \
+	first = first->next
+
+/* Intercambia los contenidos ambos punteros. */
 #define swapElement(element1, element2)  \
 	void* aux_e = element1; \
 	element1 = element2; \
@@ -33,7 +50,19 @@
 
 void quicksort(int, int);
 boolean invoke_quicksort(ArrayList*, Compare);
+void mergesort(Node**, Node**, int);
+void splitList(Node*, Node*, int, List*, List*);
+void merge(Node**, Node**, List*, List*);
+boolean invoke_mergesort(LinkedList*, Compare);
 boolean bsortLK(LinkedList*, Compare);
 boolean bsortAL(ArrayList*, Compare);
+void* bSearch(ArrayList*, const void*, Compare);
+int bSearch_i(ArrayList*, const void*, Compare);
+void* maxLK(LinkedList*, Compare);
+void* maxAL(ArrayList*, Compare);
+boolean reverseLK(LinkedList*);
+boolean reverseAL(ArrayList*);
+void* minLK(LinkedList*, Compare);
+void* minAL(ArrayList*, Compare);
 
 #endif /* _ALGORITHM_H */
