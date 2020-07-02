@@ -33,7 +33,6 @@ struct ArrayList
 	int count;
 };
 
-typedef struct LinkedList LinkedList;
 typedef struct ArrayList ArrayList;
 
 #define CAPACITY_DEFAULT	(10)
