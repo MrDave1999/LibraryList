@@ -23,7 +23,7 @@
 #ifndef _ARRAYLIST_H
 #define _ARRAYLIST_H
 
-#include "def.h"
+#include "def.h" 
 
 struct ArrayList
 {
@@ -33,6 +33,7 @@ struct ArrayList
 	int count;
 };
 
+typedef struct LinkedList LinkedList;
 typedef struct ArrayList ArrayList;
 
 #define CAPACITY_DEFAULT	(10)
@@ -40,9 +41,8 @@ typedef struct ArrayList ArrayList;
 #define newArrayList() new_object_list(ARRAYLIST, sizeof(ArrayList))
 #define deleteAL(objectAL) delete_object_list(ARRAYLIST, objectAL, (void(*)(void*))clearAL)
 
-void swap(void**, void**);
 boolean addLastAL(ArrayList*, void*);
-boolean addAL_Index(ArrayList*, const int, void*);			
+boolean addAL_Index(ArrayList*, const int, void*);		
 void* getAL(ArrayList*, const int);
 void* setAL(ArrayList*, const int, void*);
 boolean removeAL(ArrayList*, const void*, Equals);
@@ -52,12 +52,6 @@ void clearAL(ArrayList*);
 void* findAL(ArrayList*, const void*, Equals);
 int sizeAL(ArrayList*);
 boolean isEmptyAL(ArrayList*);
-void* bSearch(ArrayList*, const void*, Compare);
-int bSearch_i(ArrayList*, const void*, Compare);
-boolean bsortAL(ArrayList*, Compare);
-boolean quicksort(ArrayList*, Compare);
-void* minAL(ArrayList*, Compare);
-void* maxAL(ArrayList*, Compare);
 boolean setCapacity(ArrayList*, const int);
 
 #endif /* _ARRAYLIST_H */
