@@ -42,7 +42,7 @@ typedef struct List List;
 	lastNode = first; \
 	first = first->next
 
-/* Intercambia los contenidos ambos punteros. */
+/* Intercambia los contenidos de ambos punteros. */
 #define swapElement(element1, element2)  \
 	void* aux_e = element1; \
 	element1 = element2; \
