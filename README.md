@@ -31,7 +31,7 @@ Necesitas descargar:
 
 - Un compilador de C, como por ejemplo [GCC](https://jmeubank.github.io/tdm-gcc/download/).
 
-- El archivo `LibraryList_v4.0` (lo encuentras en este enlace: https://github.com/MrDave1999/LibraryList/releases/tag/v4.0).
+- El archivo `LibraryList_v4.2` (lo encuentras en este enlace: https://github.com/MrDave1999/LibraryList/releases/tag/v4.2).
 
 Después de haber descargado las herramientas, agregaremos la carpeta `lst` en el directorio `include`, que venga por defecto cuando instalemos el compilador. El archivo `liblist.a` debe estar añadido en la carpeta `lib`.
 
@@ -43,7 +43,7 @@ Por último, se le debe avisar al enlazador el nombre de la biblioteca para que 
 ```c
 gcc prueba.c -llist
 ```
-**Nota:** Para obtener el proyecto completo, debes descargar el archivo [source.rar]( https://github.com/MrDave1999/LibraryList/releases/tag/v4.0).
+**Nota:** Para obtener el proyecto completo, debes descargar el archivo [source.rar]( https://github.com/MrDave1999/LibraryList/releases/tag/v4.2).
 
 ### Documentación API
 
