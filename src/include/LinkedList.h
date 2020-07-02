@@ -40,6 +40,7 @@ struct LinkedList
 	struct Node* pEnd;
 };
 
+typedef struct ArrayList ArrayList;
 typedef struct LinkedList LinkedList;
 typedef struct Node Node;
 
@@ -62,9 +63,5 @@ void clearLK(LinkedList*);
 void* findLK(LinkedList*, const void*, Equals);
 int sizeLK(LinkedList*);
 boolean isEmptyLK(LinkedList*);
-boolean bsortLK(LinkedList*, Compare);
-boolean mergesort(LinkedList*, Compare);
-void* minLK(LinkedList*, Compare);
-void* maxLK(LinkedList*, Compare);
 
 #endif /* _LINKEDLIST_H */
