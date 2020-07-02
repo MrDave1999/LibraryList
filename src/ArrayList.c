@@ -160,56 +160,6 @@ boolean isEmptyAL(ArrayList* al)
 	return al->pArray == NULL;
 }
 
-void* bSearch(ArrayList* al, const void* key, Compare compare)
-{
-	return getAL(al, bSearch_i(al, key, compare));
-}
-
-int bSearch_i(ArrayList* al, const void* key, Compare compare)
-{
-	int cmp;
-	int first = 0;
-	int end = al->count - 1;
-	int medium;
-	while (first <= end)
-	{
-		medium = (first + end) / 2;
-		cmp = compare(al->pArray[medium], key);
-		if (cmp == 0)
-			return medium;
-		(cmp < 0) ? (first = medium + 1) : (end = medium - 1);
-	}
-	return -1;
-}
-
-void* minAL(ArrayList* al, Compare compare)
-{
-	void* candidate;
-	if(al->count == 0)
-		return NULL;
-	candidate = al->pArray[0];
-	for(int i = 1; i != al->count; ++i)
-	{
-		if(compare(al->pArray[i], candidate) < 0)
-			candidate = al->pArray[i];
-	}
-	return candidate;
-}
-
-void* maxAL(ArrayList* al, Compare compare)
-{
-	void* candidate;
-	if(al->count == 0)
-		return NULL;
-	candidate = al->pArray[0];
-	for(int i = 1; i != al->count; ++i)
-	{
-		if(compare(al->pArray[i], candidate) > 0)
-			candidate = al->pArray[i];
-	}
-	return candidate;
-}
-
 boolean setCapacity(ArrayList* al, int newCapacity)
 {
 	void* temp;
