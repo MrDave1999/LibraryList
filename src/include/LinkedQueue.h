@@ -39,10 +39,13 @@ struct LinkedQueue
 
 typedef struct LinkedQueue LinkedQueue;
 typedef struct ListNode ListNode;
-#define newLinkedQueue() new_object_list(LINKEDLIST, sizeof(LinkedQueue))
+
+#define newLinkedQueue() new_object(LINKEDQUEUE, sizeof(LinkedQueue))
+#define deleteLQ(objectLQ) delete_object(LINKEDQUEUE, objectLQ, (void(*)(void*))clearLINKEDQUEUE)
 
 boolean addLastLQ(LinkedQueue*, void*);
 void* removeFirstLQ(LinkedQueue*);
 void* getFrontLQ(LinkedQueue*);
+void clearLINKEDQUEUE(LinkedQueue*);
 
 #endif /* _LINKEDQUEUE_H */
