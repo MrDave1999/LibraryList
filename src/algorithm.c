@@ -19,8 +19,21 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-
+ 
 #include "lst/algorithm.h"
+
+/* Mueve un nodo hacia el último nodo de la lista combinada. */
+#define moveNode(last, first) \
+	first->prev = lastNode; \
+	*last = first; \
+	lastNode = first; \
+	first = first->next
+
+/* Intercambia los contenidos de ambos punteros. */
+#define swapElement(element1, element2)  \
+	void* aux_e = element1; \
+	element1 = element2; \
+	element2 = aux_e 
 
 static void** arrayElement;
 static Compare cmp;
