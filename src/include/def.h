@@ -25,19 +25,21 @@
 
 #include <stddef.h>
 
-#define MAX_LISTS	(4)
+#define MAX_STRUCTS	(6)
 #define true 1
 #define false 0
 
-enum ListType
+enum TypeStructs 
 {
 	LINKEDLIST,
 	ARRAYLIST,
 	ARRAYQUEUE,
-	ARRAYSTACK
+	ARRAYSTACK,
+	LINKEDQUEUE,
+	LINKEDSTACK
 };
 
-typedef enum ListType ListType;
+typedef enum TypeStructs TypeStructs;
 typedef unsigned char boolean;
 typedef void(*Clear)(void*);
 typedef boolean(*Equals)(const void*, const void*);
