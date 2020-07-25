@@ -23,13 +23,12 @@
 #ifndef _MEMORYMANAGEMENT_H
 #define _MEMORYMANAGEMENT_H
 
-#include "LinkedList.h"
 #include "def.h"
 
 #define freeAll(type) freeALL(type, (void(*)(void*))clear##type)
 
 int getCountStructs(TypeStructs);
-void disableFA(void);
+void disableCT(void);
 boolean pointerEquals(const void*, const void*);
 void* new_object(TypeStructs, size_t);
 void delete_object(TypeStructs, void*, Clear);
