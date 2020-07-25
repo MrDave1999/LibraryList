@@ -39,7 +39,8 @@ int getCountStructs(TypeStructs ts)
 	return registers[ts].count;
 }
 
-void disableFA()
+/* Disable container(CT) */
+void disableCT()
 {
 	act = false;
 }
