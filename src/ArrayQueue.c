@@ -19,26 +19,24 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-
+ 
 #include <stdlib.h>
 #include "lst/MemoryManagement.h"
 #include "lst/ArrayQueue.h"
 #include "lst/ArrayStack.h"
 
-void* createArray(int max, size_t size, ListType lt)
+void* createArray(int max, size_t size, TypeStructs ts)
 {
 	void* ptr;
 	void** pArray = malloc(max * sizeof(void*));
 	if(pArray == NULL)
 		return NULL;
-	ptr = calloc(1, size);
-	if(ptr == NULL || ADD_CONTAINER(&registers[lt], ptr))
+	ptr = new_object(ts, size);
+	if(ptr == NULL)
 	{
 		free(pArray);
 		return NULL;
 	}
-	if(lt == ARRAYSTACK)
-		((ArrayStack*)ptr)->top = max;
 	((ArrayQueue*)ptr)->max = max;
 	((ArrayQueue*)ptr)->pArray = pArray;
 	return ptr;
@@ -91,7 +89,7 @@ int sizeAQ(ArrayQueue* qe)
 	return qe->count;
 }
 
-void clearAQ(ArrayQueue* qe)
+void clearARRAYQUEUE(ArrayQueue* qe)
 {
 	for(int i = qe->begin; i < qe->n; ++i)
 		free(qe->pArray[i % qe->max]);
