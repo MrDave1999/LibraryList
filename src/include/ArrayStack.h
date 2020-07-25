@@ -31,11 +31,10 @@ struct ArrayStack
 	int i; 
 	int count;
 	int max;
-	int top;
 };
 
 typedef struct ArrayStack ArrayStack;
-#define deleteAS(objectAS) delete_object_list(ARRAYSTACK, objectAS, (void(*)(void*))clearAS)
+#define deleteAS(objectAS) delete_object(ARRAYSTACK, objectAS, (void(*)(void*))clearARRAYSTACK)
 #define newArrayStack(max) createArray(max, sizeof(ArrayStack), ARRAYSTACK)
 
 boolean addFirstAS(ArrayStack*, void*);
@@ -44,7 +43,7 @@ void* getTopAS(ArrayStack*);
 boolean fullAS(ArrayStack*);
 boolean isEmptyAS(ArrayStack*);
 int sizeAS(ArrayStack*);
-void clearAS(ArrayStack*);
+void clearARRAYSTACK(ArrayStack*);
 void* findAS(ArrayStack*, const void*, Equals);
 
 #endif /* _ARRAYSTACK_H */
