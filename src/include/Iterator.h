@@ -50,7 +50,7 @@
 		LinkedStack* : getNextLK((LinkedList*)expr), \
 		LinkedQueue* : getNextLK((LinkedList*)expr),  \
 		ArrayQueue* : getNextAQ((ArrayQueue*)expr),  \
-		ArrayStack* : getNextAL((ArrayList*)expr)  \
+		ArrayStack* : getNextAS((ArrayStack*)expr)  \
 	)
 
 #define remv(expr) \
@@ -70,6 +70,7 @@ boolean hasNextAS(ArrayStack*);
 void* getNextAL(ArrayList*);
 void* getNextLK(LinkedList*);	
 void* getNextAQ(ArrayQueue*);
+void* getNextAS(ArrayStack*);
 void removeElement_AL(ArrayList*);
 void removeElement_LK(LinkedList*);	
 	
