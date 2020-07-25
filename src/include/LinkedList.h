@@ -44,9 +44,9 @@ typedef struct LinkedList LinkedList;
 typedef struct Node Node;
 
 #include "SortedList.h"
-#define newLinkedList() new_object_list(LINKEDLIST, sizeof(LinkedList))
-#define deleteLK(objectLK) delete_object_list(LINKEDLIST, objectLK, (void(*)(void*))clearLK)
-
+#define newLinkedList() new_object(LINKEDLIST, sizeof(LinkedList))
+#define deleteLK(objectLK) delete_object(LINKEDLIST, objectLK, (void(*)(void*))clearLINKEDLIST)
+  
 void* createNode(void*, void*, size_t);
 boolean addLastLK(LinkedList*, void*);
 boolean addFirstLK(LinkedList*, void*);
@@ -57,8 +57,9 @@ void* removeFirstLK(LinkedList* lk);
 boolean removeLK(LinkedList*, const void*, Equals);
 boolean removeAll_LK(LinkedList*, const void*, Equals);
 boolean iremoveLK(LinkedList*, const int);
+boolean rremoveLK(LinkedList*, const int, const int);
 void removeNode(LinkedList*);
-void clearLK(LinkedList*);
+void clearLINKEDLIST(LinkedList*);
 void* findLK(LinkedList*, const void*, Equals);
 int sizeLK(LinkedList*);
 boolean isEmptyLK(LinkedList*);
