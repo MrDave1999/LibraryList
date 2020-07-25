@@ -33,10 +33,12 @@ struct LinkedStack
 };
 
 typedef struct LinkedStack LinkedStack;
-#define newLinkedStack() new_object_list(LINKEDLIST, sizeof(LinkedStack))
+#define newLinkedStack() new_object(LINKEDSTACK, sizeof(LinkedStack))
+#define deleteLS(objectLS) delete_object(LINKEDSTACK, objectLS, (void(*)(void*))clearLINKEDSTACK)
 
 boolean addFirstLS(LinkedStack*, void*);
 void* removeFirstLS(LinkedStack*);
 void* getTopLS(LinkedStack*);
+void clearLINKEDSTACK(LinkedStack*);
 
 #endif /* _LINKEDSTACK_H */
