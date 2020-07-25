@@ -26,18 +26,13 @@
 #include "LinkedList.h"
 #include "def.h"
 
-#define clears freeALL
-#define freeALL freeAll
-#define ADD_CONTAINER(list, ob) (act && addLastLK(list, ob))
+#define freeAll(type) freeALL(type, (void(*)(void*))clear##type)
 
-extern LinkedList registers[MAX_LISTS];
-extern boolean act;
-void free_queue_stack(const ListType, void*);
-void setContainer(boolean);
+int getCountStructs(TypeStructs);
+void disableFA(void);
 boolean pointerEquals(const void*, const void*);
-void* new_object_list(const ListType, size_t);
-void delete_object_list(const ListType, void*, Clear);
-void freeALLEx(const ListType, Clear);
-void freeALL(void);
+void* new_object(TypeStructs, size_t);
+void delete_object(TypeStructs, void*, Clear);
+void freeALL(TypeStructs, Clear);
 
 #endif /* _MEMORYMANAGEMENT_H */
