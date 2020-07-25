@@ -8,46 +8,43 @@ int main()
 		newArrayList();
 	
 	for(int i = 0; i != 5; ++i)
-		newSortedList(NULL);
-	
+	{
+		newLinkedQueue();
+		newLinkedStack();
+	}
+		
 	for(int i = 0; i != 4; ++i)
 	{
-		newQueue();
-		newStack();
+		newArrayQueue(10);
+		newArrayStack(11);
 	}
 	
 	for(int i = 0; i != 6; ++i)
 		newLinkedList();
 	
-	printf("Count ArrayList: %d\n", registers[ARRAYLIST].count);
-	printf("Count LinkedList: %d\n", registers[LINKEDLIST].count);
+	for(int i = 0; i != 3; ++i)
+		newSortedList(NULL);
 	
-	freeAll();
+	printf("ArrayList: %d\n", getCountStructs(ARRAYLIST));
+	printf("LinkedList: %d\n", getCountStructs(LINKEDLIST));
+	printf("ArrayStack: %d\n", getCountStructs(ARRAYSTACK));
+	printf("ArrayQueue: %d\n", getCountStructs(ARRAYQUEUE));
+	printf("LinkedStack: %d\n", getCountStructs(LINKEDSTACK));
+	printf("LinkedQueue: %d\n", getCountStructs(LINKEDQUEUE));	
 	
-	LinkedList* lk[5];
-	ArrayList* al[5];
+	freeAll(ARRAYLIST);
+	freeAll(LINKEDLIST);
+	freeAll(ARRAYSTACK);
+	freeAll(ARRAYQUEUE);
+	freeAll(LINKEDSTACK);
+	freeAll(LINKEDQUEUE);
 	
-	for(int i = 0; i != 5; ++i)
-	{
-		lk[i] = newLinkedList();
-		al[i] = newArrayList();
-	}
-	
-	printf("\nCount ArrayList: %d\n", registers[ARRAYLIST].count);
-	printf("Count LinkedList: %d\n", registers[LINKEDLIST].count);
-	
-	delete(lk[0]);
-	delete(lk[3]);
-	delete(al[2]);
-	delete(al[0]);
-	
-	printf("\nCount ArrayList: %d\n", registers[ARRAYLIST].count);
-	printf("Count LinkedList: %d\n", registers[LINKEDLIST].count);
-	
-	freeAll();
-	
-	printf("\nCount ArrayList: %d\n", registers[ARRAYLIST].count);
-	printf("Count LinkedList: %d\n", registers[LINKEDLIST].count);
+	printf("ArrayList: %d\n", getCountStructs(ARRAYLIST));
+	printf("LinkedList: %d\n", getCountStructs(LINKEDLIST));
+	printf("ArrayStack: %d\n", getCountStructs(ARRAYSTACK));
+	printf("ArrayQueue: %d\n", getCountStructs(ARRAYQUEUE));
+	printf("LinkedStack: %d\n", getCountStructs(LINKEDSTACK));
+	printf("LinkedQueue: %d\n", getCountStructs(LINKEDQUEUE));	
 	
 	getchar();
     return 0;
