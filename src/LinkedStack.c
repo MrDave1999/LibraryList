@@ -23,7 +23,7 @@
 #include "lst/LinkedList.h"
 #include "lst/LinkedQueue.h"
 #include "lst/LinkedStack.h"
-
+ 
 boolean addFirstLS(LinkedStack* st, void* object)
 {
 	ListNode* newNode = createNode(st, object, sizeof(ListNode));
@@ -44,4 +44,9 @@ void* removeFirstLS(LinkedStack* st)
 void* getTopLS(LinkedStack* st)
 {
 	return st->pTop->object;
+}
+
+void clearLINKEDSTACK(LinkedStack* st)
+{
+	clearLINKEDLIST((LinkedList*)st);
 }
