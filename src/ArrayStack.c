@@ -31,8 +31,7 @@ boolean addFirstAS(ArrayStack* as, void* object)
 		free(object);
 		return true;
 	}
-	as->pArray[--as->top] = object;
-	++as->count;
+	as->pArray[as->count++] = object;
 	return false;
 }
 
@@ -40,13 +39,12 @@ void* removeFirstAS(ArrayStack* as)
 {
 	if(as->count == 0)
 		return NULL;
-	--as->count;
-	return as->pArray[as->top++];
+	return as->pArray[--as->count];
 }
 
 void* getTopAS(ArrayStack* as)
 {
-	return as->pArray[as->top];
+	return as->pArray[as->count - 1];
 }
 
 boolean fullAS(ArrayStack* as)
@@ -64,17 +62,16 @@ int sizeAS(ArrayStack* as)
 	return as->count;
 }
 
-void clearAS(ArrayStack* as)
+void clearARRAYSTACK(ArrayStack* as)
 {
-	for(int i = as->top; i < as->max; ++i)
+	for(int i = as->count - 1; i != -1; --i)
 		free(as->pArray[i]);
 	as->count = 0;
-	as->top = as->max;
-}
+} 
 
 void* findAS(ArrayStack* as, const void* key, Equals equals)
 {
-	for(int i = as->top; i < as->max; ++i)
+	for(int i = as->count - 1; i != -1; --i)
 	{
 		if (equals(as->pArray[i], key))
 			return as->pArray[i];
