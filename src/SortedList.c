@@ -26,8 +26,8 @@
 
 LinkedList* newSL(size_t size, Compare compare)
 {
-	SortedList* sl = calloc(1, size);
-	if(sl == NULL || ADD_CONTAINER(&registers[LINKEDLIST], sl))
+	SortedList* sl = new_object(LINKEDLIST, size);
+	if(sl == NULL)
 		return NULL;
 	sl->compare = compare;
 	return (LinkedList*)sl;
