@@ -37,8 +37,8 @@ typedef struct ArrayList ArrayList;
 
 #define CAPACITY_DEFAULT	(10)
 #define NEW_CAPACITY(expr) 	((expr->capacity) + (expr->capacity >> 1))
-#define newArrayList() new_object_list(ARRAYLIST, sizeof(ArrayList))
-#define deleteAL(objectAL) delete_object_list(ARRAYLIST, objectAL, (void(*)(void*))clearAL)
+#define newArrayList() new_object(ARRAYLIST, sizeof(ArrayList))
+#define deleteAL(objectAL) delete_object(ARRAYLIST, objectAL, (void(*)(void*))clearARRAYLIST)
 
 boolean addLastAL(ArrayList*, void*);
 boolean addAL_Index(ArrayList*, const int, void*);		
@@ -47,7 +47,8 @@ void* setAL(ArrayList*, const int, void*);
 boolean removeAL(ArrayList*, const void*, Equals);
 boolean removeAll_AL(ArrayList*, const void*, Equals);
 boolean iremoveAL(ArrayList*, const int);
-void clearAL(ArrayList*);
+boolean rremoveAL(ArrayList*, const int, const int);
+void clearARRAYLIST(ArrayList*);
 void* findAL(ArrayList*, const void*, Equals);
 int sizeAL(ArrayList*);
 boolean isEmptyAL(ArrayList*);
