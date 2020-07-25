@@ -36,17 +36,17 @@ struct ArrayQueue
 };
 
 typedef struct ArrayQueue ArrayQueue;
-#define deleteAQ(objectAQ) delete_object_list(ARRAYQUEUE, objectAQ, (void(*)(void*))clearAQ)
+#define deleteAQ(objectAQ) delete_object(ARRAYQUEUE, objectAQ, (void(*)(void*))clearARRAYQUEUE)
 #define newArrayQueue(max) createArray(max, sizeof(ArrayQueue), ARRAYQUEUE)
 
-void* createArray(int, size_t, ListType);
+void* createArray(int, size_t, TypeStructs);
 boolean addLastAQ(ArrayQueue*, void*);
 void* removeFirstAQ(ArrayQueue*);
 void* getFrontAQ(ArrayQueue*);
 boolean fullAQ(ArrayQueue*);
 boolean isEmptyAQ(ArrayQueue*);
 int sizeAQ(ArrayQueue*);
-void clearAQ(ArrayQueue*);
+void clearARRAYQUEUE(ArrayQueue*);
 void* findAQ(ArrayQueue*, const void*, Equals);
 
 #endif /* _ARRAYQUEUE_H */
