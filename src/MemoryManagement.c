@@ -22,38 +22,26 @@
 
 #include <stdlib.h>
 #include "lst/MemoryManagement.h"
-#include "lst/ArrayList.h"
 #include "lst/LinkedList.h"
 #include "lst/ArrayQueue.h"
-#include "lst/ArrayStack.h"
 
-LinkedList registers[MAX_LISTS];
-boolean act = true;
+#define ADD_CONTAINER(list, ob) (act && addLastLK(list, ob))
 
-void free_queue_stack(const ListType lt, void* objectList)
+#define FREE_ARRAY(p) \
+	if(ts == ARRAYQUEUE || ts == ARRAYSTACK) \
+		free(((ArrayQueue*)p)->pArray);
+
+static LinkedList registers[MAX_STRUCTS];
+static boolean act = true;
+
+int getCountStructs(TypeStructs ts)
 {
-	if(lt == ARRAYQUEUE)
-		free(((ArrayQueue*)objectList)->pArray);
-	else if(lt == ARRAYSTACK)
-		free(((ArrayStack*)objectList)->pArray);
+	return registers[ts].count;
 }
 
-void setContainer(boolean value)
+void disableFA()
 {
-	act = (value == 0 || value == 1) ? (value) : (true);
-}
-
-void* new_object_list(const ListType lt, size_t size)
-{
-	void* ptr = calloc(1, size);
-	return (ptr == NULL || ADD_CONTAINER(&registers[lt], ptr)) ? NULL : ptr;
-}
-
-void delete_object_list(const ListType lt, void* objectList, Clear clear)
-{
-	clear(objectList);
-	free_queue_stack(lt, objectList);
-	act ? removeLK(&registers[lt], objectList, pointerEquals) : free(objectList);
+	act = false;
 }
 
 boolean pointerEquals(const void* object, const void* key)
@@ -61,23 +49,29 @@ boolean pointerEquals(const void* object, const void* key)
 	return object == key;
 }
 
-void freeALL()
+void* new_object(TypeStructs ts, size_t size)
 {
-	freeALLEx(LINKEDLIST, (void(*)(void*))clearLK);
-	freeALLEx(ARRAYLIST, (void(*)(void*))clearAL);
-	freeALLEx(ARRAYQUEUE, (void(*)(void*))clearAQ);
+	void* ptr = calloc(1, size);
+	return (ptr == NULL || ADD_CONTAINER(&registers[ts], ptr)) ? NULL : ptr;
 }
 
-void freeALLEx(const ListType lt, Clear clear)
+void delete_object(TypeStructs ts, void* po, Clear clear)
 {
-	while (registers[lt].pBegin != NULL)
+	clear(po);
+	FREE_ARRAY(po);
+	act ? removeLK(&registers[ts], po, pointerEquals) : free(po);
+}
+
+void freeALL(TypeStructs ts, Clear clear)
+{
+	while (registers[ts].pBegin != NULL)
 	{
-		registers[lt].aux = registers[lt].pBegin;
-		clear(registers[lt].pBegin->object);
-		free_queue_stack(lt, registers[lt].pBegin->object);
-		free(registers[lt].pBegin->object);
-		registers[lt].pBegin = registers[lt].pBegin->next;
-		free(registers[lt].aux);
+		registers[ts].aux = registers[ts].pBegin;
+		clear(registers[ts].pBegin->object);
+		FREE_ARRAY(registers[ts].pBegin->object);
+		free(registers[ts].pBegin->object);
+		registers[ts].pBegin = registers[ts].pBegin->next;
+		free(registers[ts].aux);
 	}
-	registers[lt].count = 0;
+	registers[ts].count = 0;
 }
