@@ -23,7 +23,7 @@
 #include <stdlib.h>
 #include "lst/ArrayList.h"
 #include "lst/isRange.h"
-
+ 
 boolean addLastAL(ArrayList* al, void* object)
 {
 	if (al == NULL || object == NULL)
@@ -130,7 +130,17 @@ boolean iremoveAL(ArrayList* al, const int index)
 	return false;
 }
 
-void clearAL(ArrayList* al)
+boolean rremoveAL(ArrayList* al, const int indexFirst, const int indexEnd)
+{
+	if(isRange(al, indexFirst) || isRange(al, indexEnd) || indexFirst > indexEnd)
+		return true;
+	int amount = (indexEnd - indexFirst) + 1;
+	for(int i = 0; i != amount; ++i)
+		iremoveAL(al, indexFirst);
+	return false;
+} 
+
+void clearARRAYLIST(ArrayList* al)
 {  
 	for (int i = 0; i != al->count; ++i)
 		free(al->pArray[i]);
