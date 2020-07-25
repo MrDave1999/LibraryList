@@ -24,7 +24,7 @@
 #include <stdio.h>
 #include "lst/LinkedList.h"
 #include "lst/isRange.h"
-
+  
 void* createNode(void* ptr, void* object, size_t size)
 {
 	void* newNode;
@@ -189,7 +189,22 @@ boolean iremoveLK(LinkedList* lk, const int index)
 	removeNode(lk);
 	return false;
 }
-           
+
+boolean rremoveLK(LinkedList* lk, const int indexFirst, const int indexEnd)
+{
+	int i;
+	if(isRange(lk, indexFirst) || isRange(lk, indexEnd) || indexFirst > indexEnd)
+		return true;
+	lk->aux = lk->pBegin;
+	i = 0;
+	while(i++ != indexFirst) 
+		lk->aux = lk->aux->next;
+	--i;
+	while(i++ <= indexEnd)
+		removeNode(lk);
+	return false;
+}
+
 void removeNode(LinkedList* lk)
 {
 	Node* aux2 = lk->aux;
@@ -219,7 +234,7 @@ void removeNode(LinkedList* lk)
 	--lk->count;
 }
 
-void clearLK(LinkedList* lk)
+void clearLINKEDLIST(LinkedList* lk)
 {
 	Node* aux;
 	while (lk->pBegin != NULL)
