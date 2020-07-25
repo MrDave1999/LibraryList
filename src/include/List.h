@@ -106,15 +106,11 @@
 		LinkedList* : iremoveLK \
 	)(expr, index)
 	
-#define clear(expr) \
+#define rremove(expr, indexFirst, indexEnd) \
 	_Generic((expr), \
-		ArrayList*  : clearAL((ArrayList*)expr), \
-		LinkedList* : clearLK((LinkedList*)expr),  \
-		LinkedStack* : 	clearLK((LinkedList*)expr),  \
-		ArrayStack* : 	clearAS((ArrayStack*)expr),  \
-		LinkedQueue* : 	clearLK((LinkedList*)expr),  \
-		ArrayQueue* : 	clearAQ((ArrayQueue*)expr)  \
-	)
+		ArrayList*  : rremoveAL, \
+		LinkedList* : rremoveLK \
+	)(expr, indexFirst, indexEnd)
 	
 #define find(expr, key, equals) \
 	_Generic((expr), \
@@ -170,16 +166,6 @@
 	    LinkedList*: maxLK  \
 	)(expr, compare)
 			
-#define delete(expr) \
-	_Generic((expr), \
-		ArrayList*  : deleteAL(expr), \
-		LinkedList* : deleteLK(expr),  \
-		LinkedStack* : deleteLK(expr),  \
-		ArrayStack* : deleteAS(expr),  \
-		LinkedQueue* : deleteLK(expr),  \
-		ArrayQueue* : deleteAQ(expr)  \
-	)
-
 #define getTop(expr) \
 	_Generic((expr), \
 		LinkedStack*  : getTopLS((LinkedStack*)expr), \
@@ -205,5 +191,25 @@
 		ArrayList* : reverseAL, \
 		LinkedList* : reverseLK \
 	)(expr)
+	
+#define clear(expr) \
+	_Generic((expr), \
+		ArrayList*  : clearARRAYLIST, \
+		LinkedList* : clearLINKEDLIST,  \
+		LinkedStack* : 	clearLINKEDSTACK,  \
+		ArrayStack* : 	clearARRAYSTACK,  \
+		LinkedQueue* : 	clearLINKEDQUEUE,  \
+		ArrayQueue* : 	clearARRAYQUEUE  \
+	)(expr)
+	
+#define delete(expr) \
+	_Generic((expr), \
+		ArrayList*  : deleteAL(expr), \
+		LinkedList* : deleteLK(expr),  \
+		LinkedStack* : deleteLS(expr),  \
+		ArrayStack* : deleteAS(expr),  \
+		LinkedQueue* : deleteLQ(expr),  \
+		ArrayQueue* : deleteAQ(expr)  \
+	)
 
 #endif /* _LIST_H */
