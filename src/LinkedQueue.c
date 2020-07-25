@@ -19,7 +19,7 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-
+ 
 #include "lst/LinkedList.h"
 #include "lst/LinkedQueue.h"
 #include <stdlib.h>
@@ -54,4 +54,9 @@ void* removeFirstLQ(LinkedQueue* qe)
 void* getFrontLQ(LinkedQueue* qe)
 {
 	return qe->pBegin->object;
+}
+
+void clearLINKEDQUEUE(LinkedQueue* qe)
+{
+	clearLINKEDLIST((LinkedList*)qe);
 }
