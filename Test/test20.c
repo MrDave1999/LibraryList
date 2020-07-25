@@ -22,18 +22,20 @@ int main()
 		push(as, nums[i]);
 	
 	printInfo(as, 1);
+	
 	foreach(int, num, as)
 		printf("%d\n", *num);
 	
 	int* v;
-	for(int i = 0; i != 7; ++i)
+	for(int i = 0; i != 6; ++i)
 	{
 		v = pop(as);
 		printf("Delete: %d\n", *v);
 		free(v);
 	}
-	printf("Top: %d, count: %d\n", as->top, as->count);
+	printf("Top: %d, count: %d\n", *(int*)getTop(as), as->count);
 	push(as, 2);
+	
 	foreach(int, num, as)
 		printf("%d\n", *num);
 	
@@ -43,16 +45,18 @@ int main()
 	push(as, 10);
 	push(as, 100);
 	printInfo(as, 2);
+
 	
 	foreach(int, num, as)
 		printf("%d\n", *num);
-	
+
 	key = 5;
 	int* val = find(as, &key, intEquals);
 	if(val != NULL)
 		printf("Valor encontrado: %d\n", *val);
 	else
 		printf("Elemento no encontrado\n");
+	
 	delete(as);
     return 0;
 }
