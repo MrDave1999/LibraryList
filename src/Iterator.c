@@ -42,7 +42,7 @@ void setDefaultAQ(ArrayQueue* qe)
 
 void setDefaultAS(ArrayStack* as)
 {
-	as->i = as->top;
+	as->i = as->count - 1;
 }
 
 boolean hasNextAL(ArrayList* al)
@@ -62,7 +62,7 @@ boolean hasNextAQ(ArrayQueue* qe)
 
 boolean hasNextAS(ArrayStack* as)
 {
-	return as->i < as->max;
+	return as->i != -1;
 }
 
 void* getNextAL(ArrayList* al)
@@ -80,6 +80,11 @@ void* getNextLK(LinkedList* lk)
 void* getNextAQ(ArrayQueue* qe)
 {
 	return qe->pArray[qe->i++ % qe->max];
+}
+
+void* getNextAS(ArrayStack* as)
+{
+	return as->pArray[as->i--];
 }
 
 void removeElement_AL(ArrayList* al)
